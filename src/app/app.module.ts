@@ -8,11 +8,19 @@ import { environment } from '../environments/environment';
 import { AuthService } from './services/auth.service';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SignInComponent,
+    SignUpComponent,
+    DashboardComponent,
+   
   ],
   imports: [
     BrowserModule,

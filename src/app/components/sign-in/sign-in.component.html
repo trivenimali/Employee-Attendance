@@ -1,0 +1,85 @@
+<!-- <div class="displayTable">
+  <div class="displayTableCell">
+
+    <div class="authBlock">
+      <h3>Sign In</h3>
+      <div class="formGroup">
+        <input type="text" class="formControl" placeholder="Username" #userName required>
+      </div>
+
+      <div class="formGroup">
+        <input type="password" class="formControl" placeholder="Password" #userPassword required>
+      </div>
+
+      Calling SignIn Api from AuthService 
+      <div class="formGroup">
+        <input type="button" class="btn btnPrimary" value="Log in" (click)="authService.SignIn(userName.value, userPassword.value)">
+      </div>
+
+      <div class="formGroup">
+        <span class="or"><span class="orInner">Or</span></span>
+      </div>
+
+      
+      
+    </div>
+
+    <div class="redirectToLogin">
+      <span>Don't have an account?<span class="redirect" routerLink="/sign-up"> Sign Up</span></span>
+    </div>
+
+  </div>
+</div>
+ -->
+
+ <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-xl-4 mx-auto">
+        <div class="card card-signin flex-row my-5">
+          <div class="card-img-left d-none d-md-flex">
+             <!-- Background image for card set in CSS! -->
+            </div>
+            <div class="card-body">
+              <h5 class="card-title text-center">Login</h5>
+              <form class="form-signin">
+
+                  <hr>
+                <div class="form-label-group">
+                    <!-- <label for="inputUserame">Username</label> -->
+                  <input type="text" id="inputUserame" class="form-control" placeholder="Username" #userName required>
+                  
+                </div>
+  
+                <!-- <div class="form-label-group">
+                  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
+                  <label for="inputEmail">Email address</label>
+                </div> -->
+                
+                <hr>
+  
+                <div class="form-label-group">
+                    <!-- <label for="inputPassword">Password</label> -->
+                  <input type="password" id="inputPassword" class="form-control" placeholder="Password" #userPassword required>
+                  
+                </div>
+
+                <hr>
+                
+                <!-- <div class="form-label-group">
+                  <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Password" required>
+                  <label for="inputConfirmPassword">Confirm password</label>
+                </div> -->
+  
+                <!-- <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" value="Log in" (click)="authService.SignIn(userName.value, userPassword.value)">Login</button> -->
+                <input type="button" class="btn btn-sm btn-primary btn-block text-uppercase" value="Log in" (click)="authService.SignIn(userName.value, userPassword.value)">
+                <hr>
+                <p class="d-block text-center mt-2 small">Create an account</p>
+                <a class="d-block text-center mt-2 small" routerLink="/sign-up">Sign Up</a>
+                <hr class="my-4">
+                
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
