@@ -10,23 +10,9 @@ import { Router } from '@angular/router';
 })
 export class SignUpComponent implements OnInit {
 
-  /* registerForm:FormGroup;
-  isSubmitted:true;
-  errorMessage;
-  successMessage; */
-
-
-  constructor(public authService:AuthService) { }
+  constructor(public authService: AuthService, public formBuilder: FormBuilder, public router: Router) { }
 
   ngOnInit() {
-    /* this.registerForm=this.formBuilder.group({
-      name:['',Validators.required],
-      email:['',Validators.required, Validators.email],
-      password:['',Validators.required],
-      confirmPassword:['', Validators.required]
-    }) */
+
   }
-
-
-
 }

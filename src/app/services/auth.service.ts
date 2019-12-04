@@ -5,6 +5,7 @@ import { auth } from 'firebase/app';
 import { User } from '../interface/user';
 import * as firebase from 'firebase';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class AuthService {
   constructor(public firestore: AngularFirestore,           //injecting firestore service
     public afauth: AngularFireAuth,                   //injecting firebase auth service
     public router: Router,  
-    public ngZone: NgZone                          
+    public ngZone: NgZone,
+    public toast: ToastrService         
     )                           
   { 
     //saving user data in localstorage when logged in and setting up null when logged out 
@@ -36,32 +38,33 @@ export class AuthService {
   }
 
     // Sign in with email/password
-  SignIn(email, password) {
-    return this.afauth.auth.signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.ngZone.run(() => {
-          console.log(result);
-          this.router.navigate(['dashboard']);
-        });
-        this.SetUserData(result.user);
-      }).catch((error) => {
-        window.alert(error.message)
-      })
-  }
-
-  // Sign up with email/password
+    SignIn(email, password) {
+      return this.afauth.auth.signInWithEmailAndPassword(email, password)
+        .then((result) => {
+          //this.ngZone.run(() => {
+            console.log(result);
+            this.router.navigate(['dashboard']);
+          //});
+          this.SetUserData(result.user);
+        }).catch((error) => {
+          //window.alert(error.message)
+        })
+    } 
+   
+    // Sign up with email/password
   SignUp(email, password) {
     return this.afauth.auth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
         console.log(result);
-        this.router.navigate(['sign-in']);
-        this.SetUserData(result.user);
         
+        this.SetUserData(result.user);
+        this.router.navigate(['sign-in']);
       }).catch((error) => {
         window.alert(error.message)
       })
   }
-
+  
+ 
   // Auth logic to run auth providers
   AuthLogin(provider) {
     return this.afauth.auth.signInWithPopup(provider)
@@ -69,20 +72,21 @@ export class AuthService {
        this.ngZone.run(() => {
           this.router.navigate(['dashboard']);
         })
-      this.SetUserData(result.user);
+      //this.SetUserData(result.user);
+      this.userAdd(this,result.user);
     }).catch((error) => {
       window.alert(error)
     })
   }
 
-  /* Setting up user data when sign in with username/password, 
-  sign up with username/password */
+  //setting user data
   SetUserData(user) {
-    const userRef: AngularFirestoreDocument<any> = this.firestore.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<any> = this.firestore.collection('users').doc(`users/${user.uid}`);
     const userData: User = {
       uid: user.uid,
       name:user.name,
       email: user.email,
+      phoneNo:user.phoneNo
      
      
     }
@@ -90,7 +94,9 @@ export class AuthService {
       merge: true
     })
   }
+ 
 
+  
   //Adding user
   userAdd(uid, value) {
     return this.firestore.collection('users').doc(uid).set(value);
@@ -110,7 +116,34 @@ export class AuthService {
     const user= JSON.parse(localStorage.getItem('user'));
     return (user !== null)? true:false;
   }
+
+  toastMessage() {
+    this.toast.success("Record updated successfully..!");
+  }
  
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
