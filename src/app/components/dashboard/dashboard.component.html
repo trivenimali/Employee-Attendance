@@ -1,14 +1,14 @@
 <!-- Top navigation -->
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" routerLink="/sign-up">
-         <span class="dasboard-text">Dashboard</span>
+        <span class="dasboard-text">Dashboard</span>
     </a>
 </nav>
 
 <!-- Sidebar navigation -->
 <div class="container-fluid">
     <div class="row">
-      <nav class="col-md-2 d-md-block bg-light sidebar">
+        <nav class="col-md-2 d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
@@ -34,12 +34,27 @@
                     <h1 class="h2">User Profile</h1>
                 </div>
                 <!-- Show user data when logged in -->
+
+                <div class="row" *ngIf="(user$ | async) as user">
+                    <div class="col-md-12">
+                        <div class="media">
+                            <div class="media-body">
+                                <!-- <h1>Hello: <strong>{{(user.name) ? user.name : 'User'}}</strong></h1> -->
+                                <p>User Name: <strong>{{user.name}}</strong></p>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
                 <div class="row" *ngIf="authService.userData as user">
                     <div class="col-md-12">
                         <div class="media">
-                             <div class="media-body">
-                                    <h1>Hello: <strong>{{(user.name) ? user.name : 'User'}}</strong></h1>
+                            <div class="media-body">
+                                <!-- <h1>Hello: <strong>{{(user.name) ? user.name : 'User'}}</strong></h1> -->
                                 <p>User ID: <strong>{{user.uid}}</strong></p>
+
                                 <p>Email: <strong>{{user.email}}</strong></p>
 
                             </div>

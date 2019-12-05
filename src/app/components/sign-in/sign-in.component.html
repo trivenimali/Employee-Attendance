@@ -1,37 +1,51 @@
-<div class="displayTable">
-    <div class="displayTableCell">
-  
-      
-  
-      <div class="authBlock">
-        <h3>Sign In</h3>
-        <div class="formGroup">
-          <input type="text" class="formControl" placeholder="Username" #userName required>
-        </div>
-  
-        <div class="formGroup">
-          <input type="password" class="formControl" placeholder="Password" #userPassword required>
-        </div>
-  
-        <!-- Calling SignIn Api from AuthService -->
-        <div class="formGroup">
-          <input type="button" class="btn btnPrimary" value="Log in" (click)="authService.SignIn(userName.value, userPassword.value)">
-        </div>
-  
-        <div class="formGroup">
-          <span class="or"><span class="orInner">Or</span></span>
-        </div>
-  
-  
-        <div class="forgotPassword">
-          <span routerLink="/forgot-password">Forgot Password?</span>
-        </div>
+<div class="container p-4">
+  <div class="offset-3 col-6">
+    <div class="card">
+      <div class="card-header  font-weight-bold">
+        Sign Up Form
       </div>
-  
-      <div class="redirectToLogin">
-        <span>Don't have an account?<span class="redirect" routerLink="/sign-up"> Sign Up</span></span>
+      <div class="card card-body">
+        <form [formGroup]="frmSignin" (submit)="submit()">
+
+
+          <div class="form-group">
+            <label  for="email" [ngClass]="frmSignin.controls['email'].invalid ? 'text-danger' : ''">Email
+              Address</label>
+            <input id="email" formControlName="email" type="email" class="form-control"
+              [ngClass]="frmSignin.controls['email'].invalid ? 'is-invalid' : ''">
+            <label class="text-danger" *ngIf="frmSignin.controls['email'].hasError('required')">
+              Email is Required!
+            </label>
+            <label class="text-danger" *ngIf="frmSignin.controls['email'].hasError('email')">
+              Enter a valid email address!
+            </label>
+          </div>
+
+
+          <div class="form-group">
+            <label for="password"
+              [ngClass]="frmSignin.controls['password'].invalid ? 'text-danger' : ''">Password:</label>
+            <input id="password" formControlName="password" type="password" class="form-control"
+              [ngClass]="frmSignin.controls['password'].invalid ? 'is-invalid' : ''">
+            <!-- <label class="text-danger col" *ngIf="frmSignup.controls['password'].hasError('required')">
+                Password is Required!
+              </label> -->
+            <label class="col"
+              [ngClass]="frmSignin.controls['password'].hasError('required') || frmSignin.controls['password'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+              <i class="material-icons">{{ frmSignin.controls['password'].hasError('required') ||
+                    frmSignin.controls['password'].hasError('minlength') ? '' :
+                  '' }}</i> Password must be a 8 character long and containig atleast one number.
+            </label>
+
+          </div>
+          <div class="form-group">
+            <button [disabled]="frmSignin.invalid" type="submit" class="btn btn-primary btn-block font-weight-bold" (click)="login()">Sign
+              In</button>
+          </div>
+
+          <p class="link">Already have an account?<a routerLink="/sign-up">Sign Up</a></p>
+        </form>
       </div>
-  
     </div>
   </div>
-  
+</div>

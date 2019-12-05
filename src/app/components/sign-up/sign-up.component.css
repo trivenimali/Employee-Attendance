@@ -1,3 +1,20 @@
-h3 {
-    color: rgb(0, 117, 117);
+.is-invalid {
+    border-left: solid 3px rgb(180, 12, 12);
+  }
+
+
+  .link{
+      text-align: center;
+  }
+.card-header{
+    color: rgb(21, 121, 87);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
+.form-group button{
+    background-color: rgb(31, 153, 27);
+}
+
+
+  
+  
