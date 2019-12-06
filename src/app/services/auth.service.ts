@@ -62,10 +62,9 @@ export class AuthService {
   // Sign up with email/password
   register(value) {
     console.log(value);
-    return firebase.auth().createUserWithEmailAndPassword(value.email, value.password);
+    return firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
+
   }
-
-
 
   //Adding user
   userAdd(uid, value) {

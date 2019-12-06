@@ -18,11 +18,13 @@ const routes: Routes = [
     path: 'sign-in',
     component: SignInComponent,
     canActivate:[SecureInnerPagesGuard]
+    //canActivate:[AuthGuard]
   },
 
   {
     path: 'sign-up', 
     component: SignUpComponent,
+    //canActivate:[AuthGuard]
     canActivate:[SecureInnerPagesGuard]
   },
 

@@ -1,0 +1,43 @@
+button,
+button::after {
+  -webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+button {
+  background: rgb(219, 219, 230);
+  color:black;
+  /* text-transform: uppercase; */
+  /* border-block-color: black; */
+}
+
+button::before,
+button::after {
+  background: white;
+  content: '';
+  position: absolute;
+  z-index: -1;
+}
+
+button:hover {
+  color: white;
+}
+
+.btn-1::after {
+    height: 0;
+    left: 0;
+    top: 0;
+    width: 20%
+  }
+  
+  .btn-1:hover:after {
+    height: 100%;
+  }
+
+  button{
+      margin-top: 1em;
+  }
+
+  

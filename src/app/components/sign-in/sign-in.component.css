@@ -2,6 +2,7 @@
     border-left: solid 3px rgb(180, 12, 12);
   }
 
+
   .link{
       text-align: center;
   }
@@ -12,11 +13,6 @@
 
 .form-group button{
     background-color: rgb(31, 153, 27);
-}
-
-.card-body{
-    background-color:  #ffffff
-
 }
 
 
