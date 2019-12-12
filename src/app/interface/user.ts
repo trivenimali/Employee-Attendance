@@ -5,3 +5,4 @@ export interface User {
     phoneNo:string;
    
 }
+/*  //this.ref1 = firebase.firestore().collection('users').doc(uid).collection('attendance'); */

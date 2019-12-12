@@ -1,12 +1,12 @@
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { auth } from 'firebase/app';
+import { Attendance } from '../interface/attendance';
 import { User } from '../interface/user';
 import * as firebase from 'firebase';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, of } from 'rxjs';
+import { Observable, of,  } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 
@@ -16,9 +16,7 @@ import { switchMap } from 'rxjs/operators';
 export class AuthService {
 
   userData: any;    //save loggedIn user data
-  user$ :Observable<User>;
-  
-  
+  user$: Observable<User>;
 
   constructor(public firestore: AngularFirestore,           //injecting firestore service
     public afauth: AngularFireAuth,                   //injecting firebase auth service
@@ -27,7 +25,6 @@ export class AuthService {
     public toast: ToastrService
   ) {
     //saving user data in localstorage when logged in and setting up null when logged out 
-
     this.afauth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
@@ -44,13 +41,13 @@ export class AuthService {
       switchMap(user => {
         if (user) {
           return this.firestore.doc<any>(`users/${user.uid}`).valueChanges();
+
         } else {
           return of(null);
         }
       })
     );
-  }
-
+}
 
   // Sign in with email/password
   login(value) {
@@ -58,19 +55,17 @@ export class AuthService {
     return this.afauth.auth.signInWithEmailAndPassword(value.email, value.password);
   }
 
-
   // Sign up with email/password
   register(value) {
     console.log(value);
     return firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
-
   }
 
   //Adding user
   userAdd(uid, value) {
     return this.firestore.collection('users').doc(uid).set(value);
-  }
-
+    }
+  
   // Sign out 
   SignOut() {
     return this.afauth.auth.signOut().then(() => {
@@ -86,11 +81,7 @@ export class AuthService {
     return (user !== null) ? true : false;
   }
 
-  toastMessage() {
-    this.toast.success("Record updated successfully..!");
-  }
-
-
+  
 
 }
 

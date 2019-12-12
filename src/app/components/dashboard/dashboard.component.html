@@ -39,47 +39,26 @@
                     <div class="col-md-12">
                         <div class="media">
                             <div class="media-body">
-                                <!-- <h1>Hello: <strong>{{(user.name) ? user.name : 'User'}}</strong></h1> -->
                                 <p>User Name: <strong>{{user.name}}</strong></p>
                                 <p>Date : <strong>{{todayNumber | date}}</strong></p>
-                                <p>Punch In Time : <strong></strong></p> 
-                                <p>Punch Out Time : <strong></strong></p>
-                               
-
-                                <!-- <button type="button" class="btn btn-success">Punch In</button> -->
-
+                                <p>Punch In Time :<strong></strong></p>
+                                <p>Punch Out Time :<strong></strong></p>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-
-                        <button type="button" class="btn btn-labeled btn-danger" (click)="transformDate()">
-                            <span class="btn-label"></span>Punch In</button> &nbsp; 
-                        <button type="button" class="btn btn-labeled btn-danger">
+                        <button type="button" class="btn btn-labeled btn-danger" (click)="punchInTime()">
+                            <!-- onclick="document.getElementById('showOutTime').innerHTML = Date()"> -->
+                            <span class="btn-label"></span>Punch In</button>&nbsp;
+                        <button type="button" class="btn btn-labeled btn-danger" (click)="punchOutTime()">
+                            <!-- onclick="document.getElementById('showOutTime').innerHTML = Date()"> -->
                             <span class="btn-label"></span>Punch Out</button>
                     </div>
                 </div>
-                <!--  <div class="row" *ngIf="authService.userData as user">
-                    <div class="col-md-12">
-                        <div class="media">
-                            <div class="media-body">
-                                 <h1>Hello: <strong>{{(user.name) ? user.name : 'User'}}</strong></h1> 
-                                <p>User ID: <strong>{{user.uid}}</strong></p>
-
-                                <p>Email: <strong>{{user.email}}</strong></p>
-
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
             </div>
         </main>
-
     </div>
 </div>

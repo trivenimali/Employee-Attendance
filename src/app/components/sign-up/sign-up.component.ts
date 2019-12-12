@@ -101,8 +101,7 @@ export class SignUpComponent implements OnInit {
       {
         name: this.frmSignup.value.name,
         email: this.frmSignup.value.email,
-        phone:this.frmSignup.value.phone
-
+        phone:this.frmSignup.value.phone,
       }
 
       this.authService.userAdd(res.user.uid, user).then(res => {

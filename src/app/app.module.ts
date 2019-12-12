@@ -8,7 +8,7 @@ import { AuthService } from './services/auth.service';
 //firebase imports
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestore';
 import { DatePipe } from '@angular/common';
 //components
 import { SignInComponent } from './components/sign-in/sign-in.component';
@@ -19,6 +19,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ToastrModule } from 'ngx-toastr';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthGuard } from './guard/auth.guard';
+import {  } from '@angular/fire/firestore';
 
 
 
@@ -39,7 +41,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
-  providers: [AuthService,DatePipe],
+  providers: [AuthService,AuthGuard, DatePipe, AngularFirestore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

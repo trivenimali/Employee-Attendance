@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { SecureInnerPagesGuard } from './guard/secure-inner-pages.guard';
 import { AuthGuard } from './guard/auth.guard';
 
 
@@ -17,7 +16,7 @@ const routes: Routes = [
   {
     path: 'sign-in',
     component: SignInComponent,
-    canActivate:[SecureInnerPagesGuard]
+    //canActivate:[SecureInnerPagesGuard]
     //canActivate:[AuthGuard]
   },
 
@@ -25,7 +24,7 @@ const routes: Routes = [
     path: 'sign-up', 
     component: SignUpComponent,
     //canActivate:[AuthGuard]
-    canActivate:[SecureInnerPagesGuard]
+    //canActivate:[SecureInnerPagesGuard]
   },
 
   {
