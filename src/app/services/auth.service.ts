@@ -16,7 +16,9 @@ import { switchMap } from 'rxjs/operators';
 export class AuthService {
 
   userData: any;    //save loggedIn user data
+  attendanceData:any;
   user$: Observable<User>;
+  attendance$: Observable<Attendance>;
 
   constructor(public firestore: AngularFirestore,           //injecting firestore service
     public afauth: AngularFireAuth,                   //injecting firebase auth service
@@ -47,6 +49,7 @@ export class AuthService {
         }
       })
     );
+   
 }
 
   // Sign in with email/password

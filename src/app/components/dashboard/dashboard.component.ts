@@ -1,19 +1,12 @@
 import { Component, OnInit, ElementRef, PipeTransform, Pipe } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { DatePipe } from '@angular/common';
-import * as firebase from 'firebase';
-import { User } from '../../interface/user';
-
-import { timestamp } from 'rxjs/operators';
 import * as moment from 'moment';
-import { switchMap } from 'rxjs/operators';
-declare var require: any;
-export type FirestoreTimestamp = import("firebase").firestore.Timestamp;
-
+import * as firebase from 'firebase';
 
 
 @Component({
@@ -25,57 +18,135 @@ export class DashboardComponent implements OnInit {
 
   todayNumber: number = Date.now();
   ref1: any;
-  ref2:any;
+  ref2: any;
+  ref3: any;
   userId: any;
   user$: Observable<any>;
+  date;
 
-  constructor(public firestore: AngularFirestore,           //injecting firestore service
+  attendanceDoc: AngularFirestoreDocument<any>;
+  attendance: Observable<any>;
+
+  constructor(public afs: AngularFirestore,           //injecting firestore service
     public afauth: AngularFireAuth,                   //injecting firebase auth service
     public router: Router, public authService: AuthService,
     private elementRef: ElementRef,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe,
+  ) {
+
+    this.date = Date.now();
+    let latest_date = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+    const ref = this.afs.collection('attendance').doc(latest_date);
 
     this.afauth.authState.subscribe(user => {
       if (user) {
         this.userId = user.uid
         console.log(this.userId);
-        this.ref1 = firestore.doc<any>(`users/${this.userId}`).collection('attendance');
-        console.log(this.ref1);
+        //this.ref1 = afs.doc<any>(`users/${this.userId}`).collection('attendance')
       }
     })
-
-    this.ref2=firestore.doc<User>(`users/${this.userId}`).collection('attendance').valueChanges();
-    console.log(this.ref2);
   }
-
 
   ngOnInit() {
+
+    this.date = Date.now();
+    let latest_date = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+
+
     this.user$ = this.authService.user$;
-    this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg');    //for background image
+    this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg'); //for background image
+
 
   }
+
 
   public ngOnDestroy() {
     this.elementRef.nativeElement.ownerDocument.body.classList.remove('loginBg');   //for background image
   }
 
   punchOutTime() {
-    const time1 = {
-      //punchIn:firebase.firestore.FieldValue.serverTimestamp(), 
-      punchOut: moment().format('LTS')
-    }
-    this.ref1.add(time1);
-    console.log(time1);
+    this.date= Date.now();
+    let latest_date=this.datePipe.transform(this.date, 'dd-MM-yyyy');
 
-  }
+    var attendanceData={
+      punchOutTime:moment().format('LTS')
+    }
+
+    this.afs.collection('users')
+            .doc(this.userId)
+            .collection('attendance')
+            .doc(latest_date)
+            .set(attendanceData)
+            .then(function(){
+              console.log("Success")
+            })
+    
+    
+}
 
   punchInTime() {
-    const time2 = {
-      punchIn: moment().format('LTS')
-    }
-    this.ref1.add(time2);
-    console.log(time2);
+    this.date = Date.now();
+    let latest_date1 = this.datePipe.transform(this.date, 'dd-MM-yyyy');
 
+    var attendanceData1={
+      PunchInTime: moment().format('LTS')
+    }
+    this.afs.collection('users')
+            .doc(this.userId)
+            .collection("attendance")
+            .doc(latest_date1)
+            .set(attendanceData1)
+            .then(function(){
+      console.log("Successfully")
+    })
+    
+   
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+   //this.ref1.collection(`attendance/${latest_date}`)
+        /*  this.ref3=afs.collection('attendance').doc(latest_date)
+         console.log(this.ref3);
+         //this.ref3=this.attendanceDoc=this.afs.doc(`attendance/${latest_date}`)
+
+    //this.attendance=this.attendanceDoc.valueChanges();*/
+
+            //const id = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+    //const ref = this.afs.collection('attendance').doc(latest_date);
+    //console.log(ref);
+
+     /* this.afs.collection('attendance')
+
+    const time2 = {
+      punchIn: moment().format('LTS')
+    }
+
+    this.ref2.add(time2);
+    console.log(time2); 
+    
+    
+    this.ref1.add(time1);
+    //this.ref1.doc(Date.now());
+    console.log(time1);
+     //punchIn:firebase.firestore.FieldValue.serverTimestamp(),
+
+      /* this.ref2 = afs.doc<any>(`attendance/${latest_date}`)
+        console.log(this.ref1); */
+  
+
+
+
