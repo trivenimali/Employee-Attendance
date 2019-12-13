@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
 
     this.date = Date.now();
     let latest_date = this.datePipe.transform(this.date, 'yyyy-MM-dd');
-    const ref = this.afs.collection('attendance').doc(latest_date);
+    //const ref = this.afs.collection('attendance').doc(latest_date);
 
     this.afauth.authState.subscribe(user => {
       if (user) {
@@ -49,14 +49,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
-    this.date = Date.now();
-    let latest_date = this.datePipe.transform(this.date, 'yyyy-MM-dd');
-
-
     this.user$ = this.authService.user$;
     this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg'); //for background image
-
-
   }
 
 
@@ -64,11 +58,11 @@ export class DashboardComponent implements OnInit {
     this.elementRef.nativeElement.ownerDocument.body.classList.remove('loginBg');   //for background image
   }
 
-  punchOutTime() {
+   punchOutTime() {
     this.date= Date.now();
     let latest_date=this.datePipe.transform(this.date, 'dd-MM-yyyy');
 
-    var attendanceData={
+    const attendanceData={
       punchOutTime:moment().format('LTS')
     }
 
@@ -76,28 +70,32 @@ export class DashboardComponent implements OnInit {
             .doc(this.userId)
             .collection('attendance')
             .doc(latest_date)
-            .set(attendanceData)
+            .update({
+              punchOutTime:moment().format('LTS')
+            })
             .then(function(){
               console.log("Success")
             })
-    
-    
-}
+  }
 
-  punchInTime() {
+  
+
+   punchInTime() {
     this.date = Date.now();
-    let latest_date1 = this.datePipe.transform(this.date, 'dd-MM-yyyy');
+    let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy');
 
-    var attendanceData1={
+    const attendanceData1={
       PunchInTime: moment().format('LTS')
     }
-    this.afs.collection('users')
+      this.afs.collection('users')
             .doc(this.userId)
             .collection("attendance")
-            .doc(latest_date1)
-            .set(attendanceData1)
+            .doc(latest_date)
+            .set({
+              PunchInTime: moment().format('LTS')
+            })
             .then(function(){
-      console.log("Successfully")
+      console.log("Success")
     })
     
    
