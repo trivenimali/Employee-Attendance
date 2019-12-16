@@ -4,6 +4,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './guard/auth.guard';
+import { HistoryComponent } from './history/history.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,12 @@ const routes: Routes = [
     component: DashboardComponent,
     canActivate:[AuthGuard]
   },
+
+  {
+    path: 'history',
+    component:HistoryComponent,
+    canActivate:[AuthGuard]
+  }
 
 ];
 

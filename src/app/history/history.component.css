@@ -43,6 +43,13 @@ button::after {
     color: black;
   }
 
-  
+  .table-bordered{
+    border:1px solid black;
+    
+  }
+  tr th{
+    background-color:transparent;
+  }
+
  
   

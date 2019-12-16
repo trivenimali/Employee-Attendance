@@ -1,7 +1,9 @@
 <!-- Top navigation -->
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" routerLink="/sign-up">
-        <span class="dasboard-text">Dashboard</span>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0">
+        <span class="dasboard-text">
+            <h5>Dashboard</h5>
+        </span>
     </a>
 </nav>
 
@@ -12,13 +14,13 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active">
-                            <i class="fas fa-user"></i>User Profile
+                        <a class="nav-link active" routerLink="/history">
+                            <i class="fas fa-user"></i>User History
                         </a>
                     </li>
                     <!-- Calling SignOut() Api from AuthService -->
                     <li class="nav-item">
-                        <a class="nav-link" (click)="authService.SignOut()">
+                        <a class="nav-link " (click)="authService.SignOut()">
                             <i class="fas fa-sign-out-alt"></i>Log out
                         </a>
                     </li>
@@ -41,21 +43,20 @@
                             <div class="media-body">
                                 <p>User Name: <strong>{{user.name}}</strong></p>
                                 <p>Date : <strong>{{todayNumber | date}}</strong></p>
-                                <p>Punch In Time: <strong></strong></p>
-                                <p>Punch Out Time: <strong></strong></p>
-                            </div>
-                            </div>
+                                <p>Punch In Time: <strong>{{todayNumber1 | date:'mediumTime'}}</strong></p>
+                                <p>Punch In Time: <strong>{{todayNumber2 | date:'mediumTime'}}</strong></p>
+                             </div>
                         </div>
                     </div>
-                
+                </div>
+
 
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-labeled btn-danger" (click)="punchInTime()">
-                            <!-- onclick="document.getElementById('showOutTime').innerHTML = Date()"> -->
+                        <button type="button" class="btn btn-labeled btn-danger" [disabled]="clicked"
+                            (click)="punchInTime(); clicked = true;">
                             <span class="btn-label"></span>Punch In</button>&nbsp;
                         <button type="button" class="btn btn-labeled btn-danger" (click)="punchOutTime()">
-                            <!-- onclick="document.getElementById('showOutTime').innerHTML = Date()"> -->
                             <span class="btn-label"></span>Punch Out</button>
                     </div>
                 </div>
@@ -63,3 +64,20 @@
         </main>
     </div>
 </div>
+
+<!--  <table>
+                                    <tbody>
+                                        <tr>
+                                            <td><p>User Name: <strong>{{user.name}}</strong></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Date : <strong>{{todayNumber | date}}</strong></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Punch In Time: <strong>{{todayNumber1 | date:'mediumTime'}}</strong></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Punch Out Time: <strong>{{todayNumber2 | date:'mediumTime'}}</strong></p></td>
+                                        </tr>
+                                    </tbody>
+                                </table> -->

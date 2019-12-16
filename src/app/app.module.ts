@@ -21,6 +21,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from './guard/auth.guard';
 import {  } from '@angular/fire/firestore';
+import { HistoryComponent } from './history/history.component';
 
 
 
@@ -30,6 +31,7 @@ import {  } from '@angular/fire/firestore';
     SignInComponent,
     SignUpComponent,
     DashboardComponent,
+    HistoryComponent,
    
   ],
   imports: [

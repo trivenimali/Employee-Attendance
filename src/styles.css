@@ -14,7 +14,7 @@ body {
   font-weight: 400;
   width: 100%;
   height: 100%;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Times New Roman", Times, serif;
   
 }
 
@@ -274,7 +274,6 @@ input:-moz-placeholder {
 a:not([href]):not([tabindex]):focus,
 a:not([href]):not([tabindex]):hover {
   color: #E91E63;
-  background: #efefef;
 }
 
 /* * Content */
@@ -503,7 +502,7 @@ body .table thead th {
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 1)
+  color: rgb(191, 245, 242)
 }
 
 .card {
@@ -617,6 +616,7 @@ body .table thead th {
     width: 50%;
     float: left;
     display: inherit;
+    
   }
 
   .sidebar {
@@ -650,9 +650,6 @@ body .table thead th {
     box-shadow: none
   }
 
-  .px-logo {
-    display: none;
-  }
 }
 
 

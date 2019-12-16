@@ -7,6 +7,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 import * as firebase from 'firebase';
+import { Attendance } from 'src/app/interface/attendance';
+import { User } from '../../interface/user';
 
 
 @Component({
@@ -17,15 +19,19 @@ import * as firebase from 'firebase';
 export class DashboardComponent implements OnInit {
 
   todayNumber: number = Date.now();
-  ref1: any;
-  ref2: any;
-  ref3: any;
+  todayNumber1:Date;
+  todayNumber2:Date;
   userId: any;
   user$: Observable<any>;
+  //user:Observable<User>;
   date;
+  ref1;
 
-  attendanceDoc: AngularFirestoreDocument<any>;
-  attendance: Observable<any>;
+  clicked = false;
+
+ /*  attendanceCollection:AngularFirestoreCollection<any>;
+   */
+
 
   constructor(public afs: AngularFirestore,           //injecting firestore service
     public afauth: AngularFireAuth,                   //injecting firebase auth service
@@ -36,13 +42,12 @@ export class DashboardComponent implements OnInit {
 
     this.date = Date.now();
     let latest_date = this.datePipe.transform(this.date, 'yyyy-MM-dd');
-    //const ref = this.afs.collection('attendance').doc(latest_date);
-
+    
     this.afauth.authState.subscribe(user => {
       if (user) {
         this.userId = user.uid
         console.log(this.userId);
-        //this.ref1 = afs.doc<any>(`users/${this.userId}`).collection('attendance')
+        this.ref1 = afs.doc<any>(`users/${this.userId}`).collection('attendance')
       }
     })
   }
@@ -51,8 +56,19 @@ export class DashboardComponent implements OnInit {
 
     this.user$ = this.authService.user$;
     this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg'); //for background image
-  }
+    
+    var attend=this.afs
+                  .collection('attendance')
+                  .get()
+                  .subscribe(function(querySnapshot){
+                    querySnapshot.forEach(function(doc){
+                      console.log(doc.id , "=>", doc.data());
+                    });
+                  }) 
 
+    //console.log(attend);
+   
+  }
 
   public ngOnDestroy() {
     this.elementRef.nativeElement.ownerDocument.body.classList.remove('loginBg');   //for background image
@@ -62,6 +78,10 @@ export class DashboardComponent implements OnInit {
     this.date= Date.now();
     let latest_date=this.datePipe.transform(this.date, 'dd-MM-yyyy');
 
+    let date1= new Date(this.date);
+    console.log(date1)
+
+    this.todayNumber2=new Date(this.date);
     const attendanceData={
       punchOutTime:moment().format('LTS')
     }
@@ -71,18 +91,18 @@ export class DashboardComponent implements OnInit {
             .collection('attendance')
             .doc(latest_date)
             .update({
-              punchOutTime:moment().format('LTS')
+              punchOutTime:this.date
             })
             .then(function(){
               console.log("Success")
             })
   }
 
-  
-
    punchInTime() {
     this.date = Date.now();
     let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy');
+
+    this.todayNumber1=new Date(this.date);
 
     const attendanceData1={
       PunchInTime: moment().format('LTS')
@@ -92,14 +112,18 @@ export class DashboardComponent implements OnInit {
             .collection("attendance")
             .doc(latest_date)
             .set({
-              PunchInTime: moment().format('LTS')
+              punchInTime: this.date
             })
             .then(function(){
       console.log("Success")
     })
-    
-   
+
+    //user.isDisabled = !user.isDisabled; 
   }
+
+  isDisabled(user) : boolean {
+    return user && user.username === name;
+   }
 
 }
 
