@@ -42,14 +42,39 @@
                         <div class="media">
                             <div class="media-body">
                                 <p>User Name: <strong>{{user.name}}</strong></p>
+                                
                                 <p>Date : <strong>{{todayNumber | date}}</strong></p>
-                                <p>Punch In Time: <strong>{{todayNumber1 | date:'mediumTime'}}</strong></p>
-                                <p>Punch In Time: <strong>{{todayNumber2 | date:'mediumTime'}}</strong></p>
-                             </div>
+                               <!--  <p>Punch In Time: <strong>{{punchIn | date:'mediumTime'}}</strong></p>
+                                <p>Punch Out Time: <strong>{{punchOut | date:'mediumTime'}}</strong></p>
+                            *ngFor="let attendance of attend1 | async" -->
+                            </div>
                         </div>
                     </div>
                 </div>
 
+                <div class="row" *ngIf="(attend | async) as attendance"  >
+                    <div class="col-md-12">
+                        <div class="media">
+                            <div class="media-body">
+                                <p>Punch In Time<strong>{{attendance.punchInTime | date:'mediumTime'}}</strong></p>
+                                <p>Punch Out Time<strong>{{attendance.punchOutTime | date:'mediumTime'}}</strong></p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div> 
+
+               <!--  <ul *ngFor="let att of attend | async">
+                    <li>
+                      <strong>{{ att.punchIn}}</strong>
+                      <br>
+                      {{att.punchOut}}
+                    </li>
+                  </ul> -->
+                  
 
                 <div class="row">
                     <div class="col-md-12">

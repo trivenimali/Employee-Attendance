@@ -158,3 +158,220 @@ export class SignUpComponent implements OnInit {
   }
 
 }
+
+/* /*  this.ref2=this.ref1.Pipe(map(res=>{
+    return Object.keys(res).map(x=>{
+        const output= res[x];
+        output._keys=x;
+        console.log(this.ref2)
+
+     
+    });
+  }));
+            this.afs.collection('users')
+            .doc(this.userId)
+            .collection('attendance')
+            .get().subscribe(function(querySnapshot) {
+              querySnapshot.forEach((doc)=> {
+                  console.log(doc.id, " => ", doc.data()); 
+                 attendance= doc.data()
+                  console.log(attendance);
+              });
+          });
+   */
+
+ /*  getAttendance():Observable<any>{
+    return new Observable((observer)=>{
+      this.afs.collection('users')
+              .doc(this.userId)
+              .collection('attendance')
+              .snapshotChanges((querySnapshot)=>{
+                let attendance=[];
+                querySnapshot.forEach((doc)=>{
+                  let data= doc.data();
+                  console.log(data);
+
+                  ({
+
+                  })
+                })
+
+              })
+    }) */
+
+
+/*  
+ /* var dbRef=afs.doc('users/userId').get().subscribe(function(querySnapshot){
+      querySnapshot.forEach(function(doc)) 
+    })
+
+    /* var dbRef=afs.collection('attendance').get()
+    .subscribe(function(querySnapshot){
+      querySnapshot.forEach(function(doc){
+        console.log( doc.data());
+      });
+    }) 
+    console.log(dbRef) 
+
+this.afs.collection('users')
+              .doc(this.userId)
+              .collection('attendance', ref=>ref.where("latest_date", "==", latest_date))
+              .get()
+              .subscribe(function(querySnapshot){
+                querySnapshot.forEach(function(doc){
+                  console.log(doc.id, "=>", doc.data());
+                  
+                })
+              })   
+
+               /* this.afs.collection('users')
+              .doc(this.userId)
+              .collection('attendance', ref=>ref.where("latest_date", "==", latest_date))
+              .get()
+              .subscribe(function(querySnapshot){
+                querySnapshot.forEach(function(doc){
+                  console.log(doc.id, "=>", doc.data());
+                  this.event=doc.data();
+                })
+              })    
+this.date = Date.now();
+    let latest_date = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+   //this.ref1.collection(`attendance/${latest_date}`)
+        /*  this.ref3=afs.collection('attendance').doc(latest_date)
+         console.log(this.ref3);
+         //this.ref3=this.attendanceDoc=this.afs.doc(`attendance/${latest_date}`)
+
+    //this.attendance=this.attendanceDoc.valueChanges();*/
+
+            //const id = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+    //const ref = this.afs.collection('attendance').doc(latest_date);
+    //console.log(ref);
+
+     /* this.afs.collection('attendance')
+
+    const time2 = {
+      punchIn: moment().format('LTS')
+    }
+
+    this.ref2.add(time2);
+    console.log(time2); 
+    
+    
+    this.ref1.add(time1);
+    //this.ref1.doc(Date.now());
+    console.log(time1);
+     //punchIn:firebase.firestore.FieldValue.serverTimestamp(),
+
+      /* this.ref2 = afs.doc<any>(`attendance/${latest_date}`)
+        console.log(this.ref1); */
+
+           
+    /* var attend=this.afs
+                  .collection('attendance')
+                  .get()
+                  .subscribe(function(querySnapshot){
+                    querySnapshot.forEach(function(doc){
+                      console.log(doc.id , "=>", doc.data());
+                    });
+                  }) 
+
+    //console.log(attend); */
+
+      //var todayTime2=localStorage.getItem('todayTime2');
+  /*   var todayNumber2 = JSON.parse(localStorage.getItem('todayTime2'));
+    console.log('todayTime1', JSON.parse(todayNumber2)) */
+   
+    //this.today2=new Date(todayTime2)
+
+    /* this.attendCol = this.afs.collection('users').doc(this.userId).collection('attendance');
+        this.attend = this.attendCol.valueChanges();
+
+   
+   
+
+    this.user$ = this.authService.user$;
+    this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg'); //for background image
+    this.afs.collection("users").get().subscribe(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+         
+          console.log(doc.id, " => ", doc.data());
+      });
+  }); */
+  
+
+
+
+/*
+interface colId extends Attendance { 
+  id: string; 
+}
+
+  //this.ref=afs.doc<User>(`users/${this.userId}`).collection('attendance').valueChanges();
+      //console.log(this.ref);
+
+    
+      //this._history=this.afs.collection('users').doc(this.userId).collection('attendance')
+//this.attendDoc = this.afs.doc('attendance');
+      //this.attend2 = this.attendDoc.valueChanges();
+ /* getDate(id: string) {
+    return this.afs.collection('users')
+                   .doc(this.userId)
+                   .collection('attendance')
+                   .ref.get()
+                   .then(function(doc){
+                     return doc.metadata;
+                   })
+
+  }
+
+  scheduleDetail() {
+    const id = this.route.snapshot.paramMap.get("id");
+    console.log(id); 
+  } 
+  //
+  this.attend1= this.attendCol.snapshotChanges()
+  .subscribe(actions=>{
+    return actions.map(a=>{
+      const data= a.payload.doc.data() as Attendance;
+      const id= a.payload.doc.id;
+      return {id, data}
+    });
+  });*//*  var attendRef= this.afs.collection('users', ref=>ref.where("userId", '==', this.userId)) .get()
+     .subscribe(function(querySnapshot){
+       querySnapshot.forEach(function(doc){
+         console.log(doc.id, "=>", doc.data());
+       });
+     }) */
+
+    /* var query=attendRef.collection('attendance', ref=>ref
+                       .where('punchInTime', '==', this.punchInTime))
+                       .get()
+                       .subscribe(function(querySnapshot){
+                         querySnapshot.forEach(function(doc){
+                           console.log(doc.id, "=>", doc.data());
+                         });
+                       }) */
+   /*  this.afs.collection("users")
+      .doc(this.userId)
+      .ref
+      .get().then(function (doc) {
+        if (doc.exists) {
+          console.log("Document data:", doc.data());
+        } else {
+          console.log("No such document!");
+        }
+      }).catch(function (error) {
+        console.log("Error getting document:", error);
+      }); 
+      
+       this.afs.collection('users').doc(this.userId).ref.get().then(function(doc){
+        if(doc.exists){
+          console.log("Document exists:",doc.data());
+        }
+        else{
+          console.log("No such Document");
+        }
+      })*/ 
+
+
+

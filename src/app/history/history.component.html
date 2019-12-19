@@ -1,7 +1,9 @@
 <!-- Top navigation -->
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" >
-        <span class="dasboard-text"><h5>Dashboard</h5></span>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0">
+        <span class="dasboard-text">
+            <h5>Dashboard</h5>
+        </span>
     </a>
 </nav>
 
@@ -12,8 +14,8 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" routerLink="/history">
-                            <i class="fas fa-user"></i>User History
+                        <a class="nav-link active" routerLink="/dashboard">
+                            <i class="fas fa-user"></i>User Profile
                         </a>
                     </li>
                     <!-- Calling SignOut() Api from AuthService -->
@@ -40,33 +42,39 @@
                         <div class="media">
                             <div class="media-body">
                                 <p>User Name: <strong>{{user.name}}</strong></p>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
 
+               <!--  <ul *ngFor="let post of attend | async">
+                    <li>
+                      <strong>{{ post.punchInTime}}</strong>
+                      <br>
+                      {{post.punchOutTime}}
+                    </li>
+                  </ul> -->
+                  
+
                 <table class="table table-bordered">
-                        <thead>
-                          <tr>
+                    <thead>
+                        <tr>
                             <th scope="col">Date</th>
                             <th scope="col">Punch In Time</th>
                             <th scope="col">Punch Out Time</th>
                             <th scope="col">Total Hours</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                         </tbody>
-                      </table>
-
-
-                
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let attendance of attend1 | async">
+                        <tr>
+                            <td>{{attendance.id}}</td>
+                            <td>{{attendance.data.punchInTime | date:'mediumTime'}}</td>
+                            <td>{{attendance.data.punchOutTime | date:'mediumTime'}}</td>
+                            <td>{{attendance.time_diff}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </main>
     </div>

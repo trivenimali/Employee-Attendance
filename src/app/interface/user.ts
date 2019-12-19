@@ -6,4 +6,3 @@ export interface User {
     isDisabled:boolean;
    
 }
-/*  //this.ref1 = firebase.firestore().collection('users').doc(uid).collection('attendance'); */

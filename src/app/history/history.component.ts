@@ -1,13 +1,22 @@
-import { Component, OnInit, ElementRef, PipeTransform, Pipe } from '@angular/core';
+import { Component, OnInit, ElementRef} from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
-import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { DatePipe } from '@angular/common';
-import * as moment from 'moment';
-import { firestore } from 'firebase';
+import { Moment } from 'moment';
+import { map } from 'rxjs/operators';
+const moment = require('moment');
 
+export interface Attendance{
+  //id:string;
+  punchIn:string;
+  punchOut:string;
+}
+
+interface docId extends Attendance { 
+  id: string; 
+}
 
 @Component({
   selector: 'app-history',
@@ -16,78 +25,68 @@ import { firestore } from 'firebase';
 })
 export class HistoryComponent implements OnInit {
 
-  user$: Observable<any>;
-  date;
-  todayNumber: number = Date.now();
-  todayNumber1: Date;
-  todayNumber2: Date;
-  userId: any;
-  ref1: any
-  punchInTime: any;
+  time_diff;
 
-  constructor(public authService: AuthService,
-    public elementRef: ElementRef,
-    public afs: AngularFirestore,
-    public datePipe: DatePipe,
-    public afauth: AngularFireAuth,                   //injecting firebase auth service
-    public router: Router, ) { }
+  attendCol: AngularFirestoreCollection<Attendance>;                //for retrieving data of collection
+  attend: Observable<Attendance[]>;  
+  //attend1:Observable<any>;                               //for retrieving data of collection
+  user$: Observable<any>;                                           //used for accessing authService in this
+  userId: any; 
+  difference:any; 
+  punchIn;
+  punchOut; 
+  attend1:any;                                                   //for id of user
+  
+    constructor(public authService: AuthService,                    //authentication Service
+                public elementRef: ElementRef,                      
+                public afs: AngularFirestore,                       //accessing data of firestore 
+                public datePipe: DatePipe,                          //used for formatting date and time
+                public afauth: AngularFireAuth ) { }                //injecting firebase auth service
 
-  ngOnInit() {
-    this.date = Date.now();
-    let latest_date = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+  
+    ngOnInit() {
 
-    this.user$ = this.authService.user$;
-    this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg'); //for background image
-    this.afauth.authState.subscribe(user => {
+      this.user$ = this.authService.user$;
+      this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg'); //for background image
+
+      //for getting user id
+      this.afauth.authState.subscribe(user => {
       if (user) {
         this.userId = user.uid
         console.log(this.userId);
-        //this.ref1 = this.afs.collection('users').doc(this.userId).collection('attendance').doc(latest_date);
-      }
-    })
 
+      //used for retrieving data from collection
+      this.attendCol = this.afs.collection('users').doc(this.userId).collection('attendance');
+      //this.attend = this.attendCol.valueChanges();         //valueChange gives all collection data except id of document
+      
 
-    this.date = Date.now();
-    latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy');
+      //snapshotChange gives metadata
+      this.attend1=this.attendCol.snapshotChanges().pipe(map(actions =>{
+        return actions.map(a=>{
+          const data=a.payload.doc.data() as Attendance
+          const id= a.payload.doc.id;
+          var punch_in=moment(a.payload.doc.data().punchIn);
+          var punch_out=moment(a.payload.doc.data().punchOut);
+          console.log(punch_in);
+          console.log(punch_out);
 
-    let date1 = new Date(this.date);
-    console.log(date1)
-    this.afs.collection('attendance')
-
-    this.todayNumber1 = new Date(this.date);
-
-    /*  var attendRef= this.afs.collection('users', ref=>ref.where("userId", '==', this.userId)) .get()
-     .subscribe(function(querySnapshot){
-       querySnapshot.forEach(function(doc){
-         console.log(doc.id, "=>", doc.data());
-       });
-     }) */
-
-    /* var query=attendRef.collection('attendance', ref=>ref
-                       .where('punchInTime', '==', this.punchInTime))
-                       .get()
-                       .subscribe(function(querySnapshot){
-                         querySnapshot.forEach(function(doc){
-                           console.log(doc.id, "=>", doc.data());
-                         });
-                       }) */
-   /*  this.afs.collection("users")
-      .doc(this.userId)
-      .ref
-      .get().then(function (doc) {
-        if (doc.exists) {
-          console.log("Document data:", doc.data());
-        } else {
-          console.log("No such document!");
-        }
-      }).catch(function (error) {
-        console.log("Error getting document:", error);
-      }); */
+          this.time_diff=punch_out.diff(punch_in);
+          console.log(this.time_diff)
+          return{id, data};
+         
+        })
+      }))
+      
 
      
 
+         
+      }
+    })
+
+   
   }
 
+  
+  
 }
-
-

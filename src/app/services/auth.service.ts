@@ -1,10 +1,9 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { Attendance } from '../interface/attendance';
 import { User } from '../interface/user';
 import * as firebase from 'firebase';
-import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore} from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of,  } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -14,18 +13,15 @@ import { switchMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-
-  userData: any;    //save loggedIn user data
-  attendanceData:any;
-  user$: Observable<User>;
-  attendance$: Observable<Attendance>;
+  userData: any;                                            //save loggedIn user data
+  user$: Observable<User>;                                  //for accessing field of interface 
+ 
 
   constructor(public firestore: AngularFirestore,           //injecting firestore service
-    public afauth: AngularFireAuth,                   //injecting firebase auth service
-    public router: Router,
-
-    public toast: ToastrService
-  ) {
+              public afauth: AngularFireAuth,               //injecting firebase auth service
+              public router: Router,
+              public toast: ToastrService) {
+                
     //saving user data in localstorage when logged in and setting up null when logged out 
     this.afauth.authState.subscribe(user => {
       if (user) {
@@ -48,8 +44,7 @@ export class AuthService {
           return of(null);
         }
       })
-    );
-   
+    );  
 }
 
   // Sign in with email/password
@@ -84,29 +79,4 @@ export class AuthService {
     return (user !== null) ? true : false;
   }
 
-  
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
