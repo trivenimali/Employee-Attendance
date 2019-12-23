@@ -9,8 +9,6 @@ import { Moment } from 'moment';
 const moment = require('moment');
 import { map } from 'rxjs/operators';
 
-
-
 //interface is used for getting data of collection
 export interface Attendance{
   //id:string;
@@ -18,9 +16,9 @@ export interface Attendance{
   punchOut:string;
 }
 
-interface docId extends Attendance { 
-  id: string; 
-}
+//interface docId extends Attendance { 
+  //id: string; 
+//}
 
 
 @Component({
@@ -70,6 +68,19 @@ export class DashboardComponent implements OnInit {
               //used for retrieving data from collection
              //it will gives collection data except id of document
       }
+
+      /* this.attendCol=this.afs.collection('users').doc(this.userId).collection('attendance');
+      this.attend1=this.attendCol.snapshotChanges().pipe(map(actions=>{
+          return actions.map(a=>{
+            const data=a.payload.doc.data() as Attendance
+            const id= a.payload.doc.id;
+          
+            console.log(data);
+           
+            return{id, data};   
+          })
+      })) */
+
   })
 
   
@@ -97,8 +108,18 @@ export class DashboardComponent implements OnInit {
             .then(function(){
       console.log("Success")
     })
+    
     this.attendCol = this.afs.collection('users').doc(this.userId).collection('attendance');
-    this.attend = this.attendCol.valueChanges();  
+    this.attend1 = this.attendCol.snapshotChanges().pipe(map(actions=>{
+      return actions.map(a=>{
+        const data=a.payload.doc.data() as Attendance
+        const id= a.payload.doc.id;
+      
+        console.log(data);
+       
+        return{id, data};   
+      })
+  }))
     
 
   }

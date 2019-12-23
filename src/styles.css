@@ -148,7 +148,6 @@ input:-moz-placeholder {
   color: #404040;
 }
 
-
 .or {
   text-align: center;
   display: block;
@@ -324,7 +323,7 @@ a:not([href]):not([tabindex]):hover {
   font-size: 14px;
 }
 
-.bg-dark {
+.navbar.bg-dark {
   background-color: red;
 }
 

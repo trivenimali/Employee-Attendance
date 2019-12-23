@@ -54,21 +54,7 @@ export class SignUpComponent implements OnInit {
             CustomValidators.patternValidator(/\d/, {
               hasNumber: true
             }),
-            // check whether the entered password has upper case letter
-           /*  CustomValidators.patternValidator(/[A-Z]/, {
-              hasCapitalCase: true
-            }), */
-            // check whether the entered password has a lower case letter
-            /* CustomValidators.patternValidator(/[a-z]/, {
-              hasSmallCase: true
-            }), */
-            // check whether the entered password has a special character
-            /* CustomValidators.patternValidator(
-              /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
-              {
-                hasSpecialCharacters: true
-              }
-            ), */
+          
             Validators.minLength(8)
           ])
         ],
@@ -82,14 +68,14 @@ export class SignUpComponent implements OnInit {
   }
 
   submit() {
-    // do signup or something
+    // do signup
     console.log(this.frmSignup.value);
   }
 
-  get f () { 
+ /*  get f () { 
     console.log(this.frmSignup.controls);
     return this.frmSignup.controls; 
-  }
+  } */
 
   register() {
     console.log(this, this.frmSignup.value);
@@ -119,3 +105,21 @@ export class SignUpComponent implements OnInit {
 
 
 }
+
+
+//validators data
+  // check whether the entered password has upper case letter
+           /*  CustomValidators.patternValidator(/[A-Z]/, {
+              hasCapitalCase: true
+            }), */
+            // check whether the entered password has a lower case letter
+            /* CustomValidators.patternValidator(/[a-z]/, {
+              hasSmallCase: true
+            }), */
+            // check whether the entered password has a special character
+            /* CustomValidators.patternValidator(
+              /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
+              {
+                hasSpecialCharacters: true
+              }
+            ), */
