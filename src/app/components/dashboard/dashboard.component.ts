@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, PipeTransform, Pipe } from '@angular/cor
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
+import { Observable, of, merge } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { DatePipe } from '@angular/common';
 import { Moment } from 'moment';
@@ -39,7 +39,8 @@ export class DashboardComponent implements OnInit {
   user$: Observable<any>;                             //used for accessing authService in this
   clicked = false; 
   todayNumber: number = Date.now();    
-  attend1:any;                               //for disabled button
+  attend1:any;   
+  time_diff;                            //for disabled button
                              
   
   constructor(public afs: AngularFirestore,           //injecting firestore service
@@ -70,6 +71,8 @@ export class DashboardComponent implements OnInit {
              //it will gives collection data except id of document
       }
   })
+
+  
    }
 
   public ngOnDestroy() {
@@ -96,15 +99,8 @@ export class DashboardComponent implements OnInit {
     })
     this.attendCol = this.afs.collection('users').doc(this.userId).collection('attendance');
     this.attend = this.attendCol.valueChanges();  
-    /* this.attend1=this.attendCol.snapshotChanges().pipe(map(actions =>{
-      return actions.map(a=>{
-        const data=a.payload.doc.data() as Attendance
-        const id= a.payload.doc.id;
-        return{id, data};
-      })
-    })) */
     
-  
+
   }
 
   //for getting punchOut time
@@ -126,14 +122,28 @@ export class DashboardComponent implements OnInit {
                   console.log("Success")
                 })
 
-               /*  var a=moment(this.punchIn);
-                var b=moment(this.punchOut)
+                var punchIn_time=moment(this.punchIn);
+                var punchOut_time=moment(this.punchOut)
          
-                var c=b.diff(a,'hours');
+               this.time_diff=punchOut_time.diff(punchIn_time,'seconds');
          
-                console.log(c); */
+                console.log(this.time_diff); 
+
+                  this.afs.collection('users')
+                        .doc(this.userId)
+                        .collection('attendance')
+                        .doc(latest_date)
+                        .set({
+                          total_hours:this.time_diff
+                        }, {merge:true})
+                        .then(function(){
+                          console.log("success")
+                        })  
       }
+
+      
 }
+
 
 
 

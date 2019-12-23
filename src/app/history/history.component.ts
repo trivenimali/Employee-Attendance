@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable, of } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { DatePipe } from '@angular/common';
-import { Moment } from 'moment';
+import { Moment, duration } from 'moment';
 import { map } from 'rxjs/operators';
 const moment = require('moment');
 
@@ -12,6 +12,7 @@ export interface Attendance{
   //id:string;
   punchIn:string;
   punchOut:string;
+  total_hours:string;
 }
 
 interface docId extends Attendance { 
@@ -26,10 +27,12 @@ interface docId extends Attendance {
 export class HistoryComponent implements OnInit {
 
   time_diff;
-
+  hours;
+  time_diff1;
+  time:string;
   attendCol: AngularFirestoreCollection<Attendance>;                //for retrieving data of collection
   attend: Observable<Attendance[]>;  
-  //attend1:Observable<any>;                               //for retrieving data of collection
+  //attend1:Observable<any>;                                        //for retrieving data of collection
   user$: Observable<any>;                                           //used for accessing authService in this
   userId: any; 
   difference:any; 
@@ -57,36 +60,32 @@ export class HistoryComponent implements OnInit {
 
       //used for retrieving data from collection
       this.attendCol = this.afs.collection('users').doc(this.userId).collection('attendance');
-      //this.attend = this.attendCol.valueChanges();         //valueChange gives all collection data except id of document
+      
+     //this.attend = this.attendCol.valueChanges();         //valueChange gives all collection data except id of document
       
 
       //snapshotChange gives metadata
       this.attend1=this.attendCol.snapshotChanges().pipe(map(actions =>{
-        return actions.map(a=>{
+          return actions.map(a=>{
           const data=a.payload.doc.data() as Attendance
           const id= a.payload.doc.id;
-          var punch_in=moment(a.payload.doc.data().punchIn);
-          var punch_out=moment(a.payload.doc.data().punchOut);
-          console.log(punch_in);
-          console.log(punch_out);
-
-          this.time_diff=punch_out.diff(punch_in);
-          console.log(this.time_diff)
-          return{id, data};
+        
+          console.log(data);
          
-        })
-      }))
+          return{id, data};   
+        })  
+      })) 
       
-
-     
-
-         
       }
-    })
-
-   
-  }
-
-  
-  
+    })  
+  }  
 }
+
+
+//for calculating total_hours
+/* const punchIn_time=moment(data.punchIn)
+console.log(punchIn_time);
+const punchOut_time=moment(this.punchOut)
+var time_diff= punchOut_time.diff(punchIn_time, 'seconds')
+
+console.log(time_diff); */
