@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { Moment } from 'moment';
 const moment = require('moment');
 import { map } from 'rxjs/operators';
+import { User } from 'firebase';
 
 //interface is used for getting data of collection
 export interface Attendance{
@@ -15,11 +16,6 @@ export interface Attendance{
   punchIn:string;
   punchOut:string;
 }
-
-//interface docId extends Attendance { 
-  //id: string; 
-//}
-
 
 @Component({
   selector: 'app-dashboard',
@@ -38,22 +34,16 @@ export class DashboardComponent implements OnInit {
   clicked = false; 
   todayNumber: number = Date.now();    
   attend1:any;   
-  time_diff;                            //for disabled button
-                             
+  time_diff; 
+  isPunchInDisable=false;
+  isPunchOutDisable= false;               
   
   constructor(public afs: AngularFirestore,           //injecting firestore service
               public afauth: AngularFireAuth,         //injecting firebase auth service
               public router: Router, public authService: AuthService,
               private elementRef: ElementRef,
               private datePipe: DatePipe)
-              {
-                  this.afauth.authState.subscribe(user => {
-                  if (user) {
-                      this.userId = user.uid
-                      console.log(this.userId);
-                  }
-              })
-            }
+              { }
 
   ngOnInit() {
 
@@ -64,27 +54,27 @@ export class DashboardComponent implements OnInit {
           if (user) {
              this.userId = user.uid
              console.log(this.userId);
+        }
+        
+        //displaying punchIn and punchOut time on dashboard
 
-              //used for retrieving data from collection
-             //it will gives collection data except id of document
-      }
+        this.date=Date.now();
+        let latest_date=this.datePipe.transform(this.date, 'dd-MM-yyyy')
+        console.log(latest_date);
 
-      /* this.attendCol=this.afs.collection('users').doc(this.userId).collection('attendance');
-      this.attend1=this.attendCol.snapshotChanges().pipe(map(actions=>{
-          return actions.map(a=>{
-            const data=a.payload.doc.data() as Attendance
-            const id= a.payload.doc.id;
-          
-            console.log(data);
-           
-            return{id, data};   
-          })
-      })) */
+        this.afs.collection('users')
+                .doc(this.userId)
+                .collection('attendance')
+                .doc(latest_date)
+                .valueChanges()             //valuechanges gives only data except id of document
+                .subscribe(res=>{
+                  console.log(res);
 
-  })
-
-  
-   }
+                  this.punchIn= res['punchInTime'];
+                  this.punchOut= res['punchOutTime'];
+                })
+      })
+}
 
   public ngOnDestroy() {
     this.elementRef.nativeElement.ownerDocument.body.classList.remove('loginBg');   //for background image
@@ -92,6 +82,9 @@ export class DashboardComponent implements OnInit {
 
   //for getting punchIn time
   punchInTime() {
+
+    this.isPunchInDisable=true;
+   
     this.date = Date.now();
     let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy');//it will gives current date
 
@@ -108,30 +101,18 @@ export class DashboardComponent implements OnInit {
             .then(function(){
       console.log("Success")
     })
-    
-    this.attendCol = this.afs.collection('users').doc(this.userId).collection('attendance');
-    this.attend1 = this.attendCol.snapshotChanges().pipe(map(actions=>{
-      return actions.map(a=>{
-        const data=a.payload.doc.data() as Attendance
-        const id= a.payload.doc.id;
-      
-        console.log(data);
-       
-        return{id, data};   
-      })
-  }))
-    
-
-  }
+}
 
   //for getting punchOut time
   punchOutTime() {
+
+    this.isPunchOutDisable=true;
         this.date= Date.now();
         let latest_date=this.datePipe.transform(this.date, 'dd-MM-yyyy'); //it will shows current date
     
         this.punchOut=new Date(this.date);      //used for getting current time
         
-        // below code is used to set employees punch out time which stores in firestore collectiion 
+        //below code is used to set employees punch out time which stores in firestore collection 
         this.afs.collection('users')
                 .doc(this.userId)
                 .collection('attendance')
@@ -143,13 +124,16 @@ export class DashboardComponent implements OnInit {
                   console.log("Success")
                 })
 
+                //calculating difference of punchOut and punchIn time
                 var punchIn_time=moment(this.punchIn);
                 var punchOut_time=moment(this.punchOut)
          
-               this.time_diff=punchOut_time.diff(punchIn_time,'seconds');
+                //used moment function for calculating difference between punchIn time and punchOut time
+                this.time_diff=punchOut_time.diff(punchIn_time,'seconds');
          
                 console.log(this.time_diff); 
 
+                //storing total hours in firestore collection
                   this.afs.collection('users')
                         .doc(this.userId)
                         .collection('attendance')
@@ -159,11 +143,61 @@ export class DashboardComponent implements OnInit {
                         }, {merge:true})
                         .then(function(){
                           console.log("success")
-                        })  
-      }
-
-      
+                        }) 
+                        
+         }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ //used for retrieving data from collection
+             //it will gives collection data except id of document
+/* this.attendCol=this.afs.collection('users').doc(this.userId).collection('attendance');
+      this.attend1=this.attendCol.snapshotChanges().pipe(map(actions=>{
+          return actions.map(a=>{
+            const data=a.payload.doc.data() as Attendance
+            const id= a.payload.doc.id;
+          
+            console.log(data);
+           
+            return{id, data};   
+          })
+      }))
+       this.attendCol = this.afs.collection('users').doc(this.userId).collection('attendance');
+    this.attend1 = this.attendCol.snapshotChanges().pipe(map(actions=>{
+      return actions.map(a=>{
+        const data=a.payload.doc.data() as Attendance
+        const id= a.payload.doc.id;
+      
+        console.log(data);
+       
+        return{id, data};   
+      })
+  })) 
+      
+  this.attendCol=this.afs.collection('users').doc(this.userId).collection('attendance');
+        this.attend1=this.attendCol.snapshotChanges().pipe(map(actions=>{
+          return  actions.map(a=>{
+            const data=a.payload.doc.data() as Attendance
+            const id= a.payload.doc.id;
+          
+            console.log(data);
+           
+            return{id, data};   
+          })
+        }))*/
 
 
 

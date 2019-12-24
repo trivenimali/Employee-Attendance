@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef} from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
@@ -8,15 +8,15 @@ import { Moment, duration } from 'moment';
 import { map } from 'rxjs/operators';
 const moment = require('moment');
 
-export interface Attendance{
+export interface Attendance {
   //id:string;
-  punchIn:string;
-  punchOut:string;
-  total_hours:string;
+  punchIn: string;
+  punchOut: string;
+  total_hours: string;
 }
 
-interface docId extends Attendance { 
-  id: string; 
+interface docId extends Attendance {
+  id: string;
 }
 
 @Component({
@@ -26,66 +26,48 @@ interface docId extends Attendance {
 })
 export class HistoryComponent implements OnInit {
 
-  time_diff;
-  hours;
-  time_diff1;
-  time:string;
   attendCol: AngularFirestoreCollection<Attendance>;                //for retrieving data of collection
-  attend: Observable<Attendance[]>;  
-  //attend1:Observable<any>;                                        //for retrieving data of collection
+  attend: Observable<Attendance[]>;                                     //for retrieving data of collection
   user$: Observable<any>;                                           //used for accessing authService in this
-  userId: any; 
-  difference:any; 
-  punchIn;
-  punchOut; 
-  attend1:any;                                                   //for id of user
-  
-    constructor(public authService: AuthService,                    //authentication Service
-                public elementRef: ElementRef,                      
-                public afs: AngularFirestore,                       //accessing data of firestore 
-                public datePipe: DatePipe,                          //used for formatting date and time
-                public afauth: AngularFireAuth ) { }                //injecting firebase auth service
+  userId: any;
+  attend1: any;                                                   //for id of user
 
-  
-    ngOnInit() {
+  constructor(public authService: AuthService,                    //authentication Service
+    public elementRef: ElementRef,
+    public afs: AngularFirestore,                       //accessing data of firestore 
+    public datePipe: DatePipe,                          //used for formatting date and time
+    public afauth: AngularFireAuth) { }                //injecting firebase auth service
 
-      this.user$ = this.authService.user$;
-      this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg'); //for background image
 
-      //for getting user id
-      this.afauth.authState.subscribe(user => {
+  ngOnInit() {
+
+    this.user$ = this.authService.user$;
+    this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg'); //for background image
+
+    //for getting user id
+    this.afauth.authState.subscribe(user => {
       if (user) {
         this.userId = user.uid
         console.log(this.userId);
 
-      //used for retrieving data from collection
-      this.attendCol = this.afs.collection('users').doc(this.userId).collection('attendance');
-      
-     //this.attend = this.attendCol.valueChanges();         //valueChange gives all collection data except id of document
-      
+        //used for retrieving data from collection
+        this.attendCol = this.afs.collection('users').doc(this.userId).collection('attendance');
 
-      //snapshotChange gives metadata
-      this.attend1=this.attendCol.snapshotChanges().pipe(map(actions =>{
-          return actions.map(a=>{
-          const data=a.payload.doc.data() as Attendance
-          const id= a.payload.doc.id;
-        
-          console.log(data);
-         
-          return{id, data};   
-        })  
-      })) 
-      
+        //this.attend = this.attendCol.valueChanges();         //valueChange gives all collection data except id of document 
+
+        //snapshotChange gives metadat
+        this.attend1 = this.attendCol.snapshotChanges().pipe(map(actions => {
+          return actions.map(a => {
+            const data = a.payload.doc.data() as Attendance
+            const id = a.payload.doc.id;
+            console.log(data);
+            return { id, data };
+          })
+        }))
+
       }
-    })  
-  }  
+    })
+  }
 }
 
 
-//for calculating total_hours
-/* const punchIn_time=moment(data.punchIn)
-console.log(punchIn_time);
-const punchOut_time=moment(this.punchOut)
-var time_diff= punchOut_time.diff(punchIn_time, 'seconds')
-
-console.log(time_diff); */

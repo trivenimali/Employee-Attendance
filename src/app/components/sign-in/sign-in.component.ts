@@ -32,9 +32,7 @@ export class SignInComponent implements OnInit {
     this.elementRef.nativeElement.ownerDocument.body.classList.remove('loginBg');
   } 
 
-
-
-  createSigninForm(): FormGroup {
+createSigninForm(): FormGroup {
     return this.fb.group(
       {
         email: [
@@ -62,7 +60,7 @@ export class SignInComponent implements OnInit {
   }
 
   submit() {
-    // do signup or something
+    // do signin 
     console.log(this.frmSignin.value);
   }
 

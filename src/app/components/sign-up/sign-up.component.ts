@@ -72,10 +72,6 @@ export class SignUpComponent implements OnInit {
     console.log(this.frmSignup.value);
   }
 
- /*  get f () { 
-    console.log(this.frmSignup.controls);
-    return this.frmSignup.controls; 
-  } */
 
   register() {
     console.log(this, this.frmSignup.value);
