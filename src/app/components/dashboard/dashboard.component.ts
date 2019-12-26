@@ -7,8 +7,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { DatePipe } from '@angular/common';
 import { Moment } from 'moment';
 const moment = require('moment');
-import { map } from 'rxjs/operators';
-import { User } from 'firebase';
 
 //interface is used for getting data of collection
 export interface Attendance {
@@ -24,7 +22,6 @@ export interface Attendance {
 })
 export class DashboardComponent implements OnInit {
 
-
   attendCol: AngularFirestoreCollection<Attendance>;  //for retrieving data of collection
   attend: Observable<Attendance[]>;                   //for retrieving data of collection 
   punchIn: Date;                                       //used in functionality of punchIn
@@ -36,19 +33,13 @@ export class DashboardComponent implements OnInit {
   todayNumber: number = Date.now();
   attend1: any;
   time_diff;
-  //isPunchInDisable: boolean=false;
-  //isPunchOutDisable: boolean= false;
-  public isVisible: boolean;
+  isVisible: boolean= true;
 
   constructor(public afs: AngularFirestore,           //injecting firestore service
-    public afauth: AngularFireAuth,         //injecting firebase auth service
+    public afauth: AngularFireAuth,                   //injecting firebase auth service
     public router: Router, public authService: AuthService,
     private elementRef: ElementRef,
-    private datePipe: DatePipe) { 
-
-      //this.punchIn=JSON.parse(localStorage.getItem('punchIn'));
-     // this.punchOut=JSON.parse(localStorage.getItem('punchOut'));
-    }
+    private datePipe: DatePipe) { }
 
   ngOnInit() {
 
@@ -110,7 +101,6 @@ export class DashboardComponent implements OnInit {
   //for getting punchOut time
   punchOutTime() {
 
-    this.isVisible = true;
     this.date = Date.now();
     let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy'); //it will shows current date
 
