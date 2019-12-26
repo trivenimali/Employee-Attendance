@@ -1,4 +1,4 @@
-import { Component, OnInit,ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -28,11 +28,11 @@ export class SignInComponent implements OnInit {
     this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg');
 
   }
-   public ngOnDestroy() {
+  public ngOnDestroy() {
     this.elementRef.nativeElement.ownerDocument.body.classList.remove('loginBg');
-  } 
+  }
 
-createSigninForm(): FormGroup {
+  createSigninForm(): FormGroup {
     return this.fb.group(
       {
         email: [

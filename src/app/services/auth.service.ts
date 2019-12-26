@@ -1,11 +1,11 @@
-import { Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { User } from '../interface/user';
 import * as firebase from 'firebase';
-import { AngularFirestore} from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, of,  } from 'rxjs';
+import { Observable, of, } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 
@@ -15,13 +15,13 @@ import { switchMap } from 'rxjs/operators';
 export class AuthService {
   userData: any;                                            //save loggedIn user data
   user$: Observable<User>;                                  //for accessing field of interface 
- 
+
 
   constructor(public firestore: AngularFirestore,           //injecting firestore service
-              public afauth: AngularFireAuth,               //injecting firebase auth service
-              public router: Router,
-              public toast: ToastrService) {
-                
+    public afauth: AngularFireAuth,               //injecting firebase auth service
+    public router: Router,
+    public toast: ToastrService) {
+
     //saving user data in localstorage when logged in and setting up null when logged out 
     this.afauth.authState.subscribe(user => {
       if (user) {
@@ -44,8 +44,8 @@ export class AuthService {
           return of(null);
         }
       })
-    );  
-}
+    );
+  }
 
   // Sign in with email/password
   login(value) {
@@ -62,8 +62,8 @@ export class AuthService {
   //Adding user
   userAdd(uid, value) {
     return this.firestore.collection('users').doc(uid).set(value);
-    }
-  
+  }
+
   // Sign out 
   SignOut() {
     return this.afauth.auth.signOut().then(() => {
@@ -73,10 +73,9 @@ export class AuthService {
     })
   }
 
-  //returns true when user is logged in 
+  //return true when user is logged in
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
-    return (user !== null) ? true : false;
-  }
-
+    return (user !== null) ? true: false;
+  } 
 }

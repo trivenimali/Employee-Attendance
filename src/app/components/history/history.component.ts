@@ -55,7 +55,7 @@ export class HistoryComponent implements OnInit {
 
         //this.attend = this.attendCol.valueChanges();         //valueChange gives all collection data except id of document 
 
-        //snapshotChange gives metadat
+        //snapshotChange gives metadata
         this.attend1 = this.attendCol.snapshotChanges().pipe(map(actions => {
           return actions.map(a => {
             const data = a.payload.doc.data() as Attendance
@@ -64,6 +64,7 @@ export class HistoryComponent implements OnInit {
             return { id, data };
           })
         }))
+
 
       }
     })

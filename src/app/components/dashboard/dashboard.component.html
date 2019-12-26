@@ -45,23 +45,25 @@
                                 <p>Date : <strong>{{todayNumber | date}}</strong></p>
                                 <p>Punch In Time: <strong>{{punchIn | date:'mediumTime'}}</strong></p>
                                 <p>Punch Out Time: <strong>{{punchOut | date:'mediumTime'}}</strong></p>
-                            <!--*ngFor="let attendance of attend1 | async" -->
+                                <!--*ngFor="let attendance of attend1 | async" -->
                             </div>
                         </div>
                     </div>
                 </div>
 
-                  
+
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-labeled btn-danger" [disabled]="isPunchInDisable"
-                            (click)="punchInTime()">
+                        <button type="button" [disabled]="isVisible" class="btn btn-labeled btn-danger"
+                             (click)="punchInTime()">
                             <span class="btn-label"></span>Punch In</button> &nbsp;
-                        <button type="button" class="btn btn-labeled btn-danger" [disabled]="isPunchOutDisable"
-                          (click)="punchOutTime()">
+                        <button type="button" [disabled]="!isVisible" class="btn btn-labeled btn-danger"
+                             (click)="punchOutTime()">
                             <span class="btn-label"></span>Punch Out</button>
                     </div>
                 </div>
+
+
             </div>
         </main>
     </div>
