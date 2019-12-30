@@ -4,7 +4,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { CustomValidators } from '../../custome-validator';
 
-
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -40,12 +39,11 @@ export class SignInComponent implements OnInit {
           Validators.compose([Validators.email, Validators.required])
         ],
 
-
         password: [
           null,
           Validators.compose([
             Validators.required,
-            // check whether the entered password has a number
+            //check whether the entered password has a number
             CustomValidators.patternValidator(/\d/, {
               hasNumber: true
             }),
@@ -53,9 +51,7 @@ export class SignInComponent implements OnInit {
             Validators.minLength(8)
           ])
         ],
-
       },
-
     );
   }
 
@@ -71,7 +67,6 @@ export class SignInComponent implements OnInit {
     this.authService.login(this.frmSignin.value).then(res => {
       console.log(res);
       this.router.navigate(['dashboard']);
-
     },
 
       err => {

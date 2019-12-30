@@ -27,16 +27,16 @@ interface docId extends Attendance {
 export class HistoryComponent implements OnInit {
 
   attendCol: AngularFirestoreCollection<Attendance>;                //for retrieving data of collection
-  attend: Observable<Attendance[]>;                                     //for retrieving data of collection
+  attend: Observable<Attendance[]>;                                 //for retrieving data of collection
   user$: Observable<any>;                                           //used for accessing authService in this
   userId: any;
-  attend1: any;                                                   //for id of user
+  attend1: any;                                                     //for id of user
 
-  constructor(public authService: AuthService,                    //authentication Service
+  constructor(public authService: AuthService,                      //authentication Service
     public elementRef: ElementRef,
-    public afs: AngularFirestore,                       //accessing data of firestore 
-    public datePipe: DatePipe,                          //used for formatting date and time
-    public afauth: AngularFireAuth) { }                //injecting firebase auth service
+    public afs: AngularFirestore,                                   //accessing data of firestore 
+    public datePipe: DatePipe,                                      //used for formatting date and time
+    public afauth: AngularFireAuth) { }                             //injecting firebase auth service
 
 
   ngOnInit() {
@@ -64,8 +64,6 @@ export class HistoryComponent implements OnInit {
             return { id, data };
           })
         }))
-
-
       }
     })
   }

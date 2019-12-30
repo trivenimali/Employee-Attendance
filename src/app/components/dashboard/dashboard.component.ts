@@ -22,28 +22,30 @@ export interface Attendance {
 })
 export class DashboardComponent implements OnInit {
 
-  attendCol: AngularFirestoreCollection<Attendance>;  //for retrieving data of collection
-  attend: Observable<Attendance[]>;                   //for retrieving data of collection 
-  punchIn: Date;                                       //used in functionality of punchIn
-  punchOut: Date;                                      //used in functionality of punchOut
-  date;                                               //used for accessing date
-  userId: any;                                        //for id of user
-  user$: Observable<any>;                             //used for accessing authService in this
+  attendCol: AngularFirestoreCollection<Attendance>;    //for retrieving data of collection
+  attend: Observable<Attendance[]>;                     //for retrieving data of collection 
+  punchIn: Date;                                        //used in functionality of punchIn
+  punchOut: Date;                                       //used in functionality of punchOut
+  date;                                                 //used for accessing date
+  userId: any;                                          //for id of user
+  user$: Observable<any>;                               //used for accessing authService in this
   clicked = false;
   todayNumber: number = Date.now();
   attend1: any;
   time_diff;
-  isVisible: boolean = true;
+  isVisible:boolean;
+  //ToggleButton: boolean ;
 
-  constructor(public afs: AngularFirestore,           //injecting firestore service
-    public afauth: AngularFireAuth,                   //injecting firebase auth service
+  constructor(public afs: AngularFirestore,             //injecting firestore service
+    public afauth: AngularFireAuth,                     //injecting firebase auth service
     public router: Router, public authService: AuthService,
     private elementRef: ElementRef,
     private datePipe: DatePipe) { }
 
   ngOnInit() {
 
-    this.user$ = this.authService.user$;
+   this.user$ = this.authService.user$;
+   
 
     //this will gives a user id
     this.afauth.authState.subscribe(user => {
@@ -52,12 +54,11 @@ export class DashboardComponent implements OnInit {
         console.log(this.userId);
       }
 
-      //displaying punchIn and punchOut time on dashboard
-
       this.date = Date.now();
       let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy')
       console.log(latest_date);
 
+      //displaying punchIn and punchOut time on dashboard
       this.afs.collection('users')
         .doc(this.userId)
         .collection('attendance')
@@ -79,7 +80,8 @@ export class DashboardComponent implements OnInit {
   //for getting punchIn time
   punchInTime() {
 
-    this.isVisible = !this.isVisible;
+    this.isVisible =!this.isVisible;
+    //this.ToggleButton=!this.ToggleButton;
     this.date = Date.now();
     let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy');//it will gives current date
 
@@ -96,11 +98,16 @@ export class DashboardComponent implements OnInit {
       .then(function () {
         console.log("Success")
       })
-  }
 
-  //for getting punchOut time
+      //localStorage.setItem('isVisible', JSON.stringify(this.isVisible))
+    }
+
+//for getting punchOut time
   punchOutTime() {
+    //this.isVisible= !this.isVisible;
+    //this.isVisible;
 
+    //this.ToggleButton=false;
     this.date = Date.now();
     let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy'); //it will shows current date
 
@@ -120,7 +127,7 @@ export class DashboardComponent implements OnInit {
 
     //calculating difference of punchOut and punchIn time
     var punchIn_time = moment(this.punchIn);
-    var punchOut_time = moment(this.punchOut)
+    var punchOut_time = moment(this.punchOut);
 
     //used moment function for calculating difference between punchIn time and punchOut time
     this.time_diff = punchOut_time.diff(punchIn_time, 'hours');
@@ -138,7 +145,6 @@ export class DashboardComponent implements OnInit {
       .then(function () {
         console.log("success")
       })
-
   }
 }
 
@@ -150,13 +156,16 @@ export class DashboardComponent implements OnInit {
 
 
 
+  /*  if(localStorage.getItem('isVisible')){
+    localStorage.getItem('isVisible')
+  }
+  else{
+    this.isVisible=false;
+  }
+   */
 
-
-
-
-
-
- //used for retrieving data from collection
+ // localStorage.getItem('isVisible')
+//used for retrieving data from collection
              //it will gives collection data except id of document
 /* this.attendCol=this.afs.collection('users').doc(this.userId).collection('attendance');
       this.attend1=this.attendCol.snapshotChanges().pipe(map(actions=>{

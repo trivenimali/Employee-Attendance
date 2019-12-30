@@ -10,6 +10,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestore';
 import { DatePipe } from '@angular/common';
+
 //components
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -17,11 +18,11 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 //showing toast message
 import { ToastrModule } from 'ngx-toastr';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthGuard } from './guard/auth.guard';
-import {  } from '@angular/fire/firestore';
+import { AuthGuard } from './guard/auth-guard.service';
 import { HistoryComponent } from './components/history/history.component';
+import { SecureInnerPagesGuard } from './guard/secure-inner-pages.guard';
 
 @NgModule({
   declarations: [
@@ -39,9 +40,10 @@ import { HistoryComponent } from './components/history/history.component';
     AngularFirestoreModule,
     ToastrModule.forRoot(),
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
-  providers: [AuthService,AuthGuard, DatePipe, AngularFirestore],
+  providers: [AuthService,AuthGuard, DatePipe, AngularFirestore, SecureInnerPagesGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

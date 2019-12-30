@@ -4,7 +4,6 @@ import { CustomValidators } from '../../custome-validator';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
-
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -16,7 +15,7 @@ export class SignUpComponent implements OnInit {
   errorMessage;
   successMessage;
 
-  constructor(public fb: FormBuilder, public router:Router, public authService:AuthService,private elementRef: ElementRef) { 
+  constructor(public fb: FormBuilder, public router: Router, public authService: AuthService, private elementRef: ElementRef) {
     this.frmSignup = this.createSignupForm();
   }
 
@@ -28,14 +27,13 @@ export class SignUpComponent implements OnInit {
     this.elementRef.nativeElement.ownerDocument.body.classList.remove('loginBg');
   }
 
-
   createSignupForm(): FormGroup {
     return this.fb.group(
       {
 
         name: [
           null,
-          Validators.compose([ Validators.required])
+          Validators.compose([Validators.required])
         ],
         email: [
           null,
@@ -44,7 +42,7 @@ export class SignUpComponent implements OnInit {
 
         phone: [
           null,
-          Validators.compose([ Validators.required])
+          Validators.compose([Validators.required])
         ],
         password: [
           null,
@@ -54,7 +52,7 @@ export class SignUpComponent implements OnInit {
             CustomValidators.patternValidator(/\d/, {
               hasNumber: true
             }),
-          
+
             Validators.minLength(8)
           ])
         ],
@@ -72,7 +70,6 @@ export class SignUpComponent implements OnInit {
     console.log(this.frmSignup.value);
   }
 
-
   register() {
     console.log(this, this.frmSignup.value);
     this.isSubmitted = true;
@@ -83,7 +80,7 @@ export class SignUpComponent implements OnInit {
       {
         name: this.frmSignup.value.name,
         email: this.frmSignup.value.email,
-        phone:this.frmSignup.value.phone,
+        phone: this.frmSignup.value.phone,
       }
 
       this.authService.userAdd(res.user.uid, user).then(res => {
@@ -105,17 +102,17 @@ export class SignUpComponent implements OnInit {
 
 //validators data
   // check whether the entered password has upper case letter
-           /*  CustomValidators.patternValidator(/[A-Z]/, {
-              hasCapitalCase: true
-            }), */
+/*  CustomValidators.patternValidator(/[A-Z]/, {
+   hasCapitalCase: true
+ }), */
             // check whether the entered password has a lower case letter
-            /* CustomValidators.patternValidator(/[a-z]/, {
-              hasSmallCase: true
-            }), */
+/* CustomValidators.patternValidator(/[a-z]/, {
+  hasSmallCase: true
+}), */
             // check whether the entered password has a special character
-            /* CustomValidators.patternValidator(
-              /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
-              {
-                hasSpecialCharacters: true
-              }
-            ), */
+/* CustomValidators.patternValidator(
+  /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
+  {
+    hasSpecialCharacters: true
+  }
+), */
