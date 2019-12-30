@@ -33,8 +33,8 @@ export class DashboardComponent implements OnInit {
   todayNumber: number = Date.now();
   attend1: any;
   time_diff;
-  isVisible:boolean;
-  //ToggleButton: boolean ;
+  isVisible: boolean;
+ 
 
   constructor(public afs: AngularFirestore,             //injecting firestore service
     public afauth: AngularFireAuth,                     //injecting firebase auth service
@@ -44,8 +44,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
-   this.user$ = this.authService.user$;
-   
+    this.user$ = this.authService.user$;
+
 
     //this will gives a user id
     this.afauth.authState.subscribe(user => {
@@ -69,8 +69,11 @@ export class DashboardComponent implements OnInit {
 
           this.punchIn = res['punchInTime'];
           this.punchOut = res['punchOutTime'];
+
+          this.isVisible = !this.isVisible;
         })
-    })
+     })
+
   }
 
   public ngOnDestroy() {
@@ -80,8 +83,8 @@ export class DashboardComponent implements OnInit {
   //for getting punchIn time
   punchInTime() {
 
-    this.isVisible =!this.isVisible;
-    //this.ToggleButton=!this.ToggleButton;
+    this.isVisible = !this.isVisible;
+
     this.date = Date.now();
     let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy');//it will gives current date
 
@@ -99,15 +102,14 @@ export class DashboardComponent implements OnInit {
         console.log("Success")
       })
 
-      //localStorage.setItem('isVisible', JSON.stringify(this.isVisible))
-    }
+    //localStorage.setItem('isVisible', JSON.stringify(this.isVisible))
+  }
 
-//for getting punchOut time
+  //for getting punchOut time
   punchOutTime() {
-    //this.isVisible= !this.isVisible;
-    //this.isVisible;
 
-    //this.ToggleButton=false;
+    //this.isVisible = !this.isVisible;
+
     this.date = Date.now();
     let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy'); //it will shows current date
 
@@ -151,56 +153,6 @@ export class DashboardComponent implements OnInit {
 
 
 
-
-
-
-
-
-  /*  if(localStorage.getItem('isVisible')){
-    localStorage.getItem('isVisible')
-  }
-  else{
-    this.isVisible=false;
-  }
-   */
-
- // localStorage.getItem('isVisible')
-//used for retrieving data from collection
-             //it will gives collection data except id of document
-/* this.attendCol=this.afs.collection('users').doc(this.userId).collection('attendance');
-      this.attend1=this.attendCol.snapshotChanges().pipe(map(actions=>{
-          return actions.map(a=>{
-            const data=a.payload.doc.data() as Attendance
-            const id= a.payload.doc.id;
-
-            console.log(data);
-
-            return{id, data};
-          })
-      }))
-       this.attendCol = this.afs.collection('users').doc(this.userId).collection('attendance');
-    this.attend1 = this.attendCol.snapshotChanges().pipe(map(actions=>{
-      return actions.map(a=>{
-        const data=a.payload.doc.data() as Attendance
-        const id= a.payload.doc.id;
-
-        console.log(data);
-
-        return{id, data};
-      })
-  }))
-
-  this.attendCol=this.afs.collection('users').doc(this.userId).collection('attendance');
-        this.attend1=this.attendCol.snapshotChanges().pipe(map(actions=>{
-          return  actions.map(a=>{
-            const data=a.payload.doc.data() as Attendance
-            const id= a.payload.doc.id;
-
-            console.log(data);
-
-            return{id, data};
-          })
-        }))*/
 
 
 

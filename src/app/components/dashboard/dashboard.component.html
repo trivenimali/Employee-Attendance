@@ -54,10 +54,10 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="submit" [disabled]="ToggleButton" class="btn btn-labeled btn-danger"
+                        <button type="submit" [disabled]="isVisible" class="btn btn-labeled btn-danger"
                             (click)="punchInTime()">
                             <span class="btn-label"></span>Punch In</button> &nbsp;
-                        <button type="submit" [disabled]="!ToggleButton" class="btn btn-labeled btn-danger"
+                        <button type="submit" [disabled]="!isVisible" class="btn btn-labeled btn-danger"
                             (click)="punchOutTime()">
                             <span class="btn-label"></span>Punch Out</button>
                     </div>
