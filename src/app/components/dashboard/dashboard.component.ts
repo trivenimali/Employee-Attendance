@@ -33,8 +33,7 @@ export class DashboardComponent implements OnInit {
   todayNumber: number = Date.now();
   attend1: any;
   time_diff;
-  isVisible: boolean;
- 
+  
 
   constructor(public afs: AngularFirestore,             //injecting firestore service
     public afauth: AngularFireAuth,                     //injecting firebase auth service
@@ -69,8 +68,7 @@ export class DashboardComponent implements OnInit {
 
           this.punchIn = res['punchInTime'];
           this.punchOut = res['punchOutTime'];
-
-          this.isVisible = !this.isVisible;
+  
         })
      })
 
@@ -82,8 +80,6 @@ export class DashboardComponent implements OnInit {
 
   //for getting punchIn time
   punchInTime() {
-
-    this.isVisible = !this.isVisible;
 
     this.date = Date.now();
     let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy');//it will gives current date
