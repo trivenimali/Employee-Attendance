@@ -62,14 +62,12 @@ export class DashboardComponent implements OnInit {
         .doc(this.userId)
         .collection('attendance')
         .doc(latest_date)
-        .valueChanges()             //valuechanges gives only data except id of document
-        .subscribe(res => {
-          console.log(res)
-
-          this.punchIn_Time = res['punchInTime'];
-          this.punchOut_Time = res['punchOutTime'];
-
-        })
+        .snapshotChanges()             //valuechanges gives only data except id of document
+        .subscribe(( res: any ) => {
+          console.log(res.payload.data());
+          this.punchIn_Time = res.payload.data().punchInTime;
+          this.punchOut_Time = res.payload.data().punchOutTime;
+      })
     })
 
   }

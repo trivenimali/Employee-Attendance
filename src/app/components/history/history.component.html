@@ -14,10 +14,15 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" routerLink="/dashboard">
+                        <a class="nav-link" routerLink="/dashboard">
                             <i class="fas fa-user"></i>User Profile
                         </a>
                     </li>
+                    <li class="nav-item">
+                            <a class="nav-link active " routerLink="/history">
+                                <i class="fas fa-history"></i>User History
+                            </a>
+                        </li>
                     <!-- Calling SignOut() Api from AuthService -->
                     <li class="nav-item">
                         <a class="nav-link" (click)="authService.SignOut()">

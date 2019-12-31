@@ -100,19 +100,4 @@ export class SignUpComponent implements OnInit {
 }
 
 
-//validators data
-  // check whether the entered password has upper case letter
-/*  CustomValidators.patternValidator(/[A-Z]/, {
-   hasCapitalCase: true
- }), */
-            // check whether the entered password has a lower case letter
-/* CustomValidators.patternValidator(/[a-z]/, {
-  hasSmallCase: true
-}), */
-            // check whether the entered password has a special character
-/* CustomValidators.patternValidator(
-  /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
-  {
-    hasSpecialCharacters: true
-  }
-), */
+

@@ -15,10 +15,16 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" routerLink="/history">
-                            <i class="fas fa-user"></i>User History
+                        <a class="nav-link active" routerLink="/dashboard">
+                            <i class="fas fa-user"></i>User Profile
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                            <a class="nav-link " routerLink="/history">
+                                <i class="fas fa-history"></i>User History
+                            </a>
+                        </li>
 
                     <!-- Calling SignOut() Api from AuthService -->
                     <li class="nav-item">
@@ -36,7 +42,8 @@
                 <div class="pt-3 pb-2 mb-3 ">
                     <h1 class="h4">User Profile</h1>
                 </div>
-                <div class="card" style="width: 40rem; border-color: rgb(137, 164, 253);"
+
+                <div class="card" style="width: 40rem; border-color: rgb(191, 202, 240);"
                     *ngIf="(user$ | async) as user">
                     <div class="card-body">
                         <div class="media-body">
@@ -45,7 +52,9 @@
                             <p>Punch In Time: <strong>{{punchIn_Time | date:'mediumTime'}}</strong></p>
                             <p>Punch Out Time: <strong>{{punchOut_Time | date:'mediumTime'}}</strong></p>
                         </div>
+
                         <hr>
+
                         <div class="media-body">
                             <button type="button" [disabled]="punchIn_Time" class="btn btn-labeled btn-danger"
                                 (click)="punchInTime()">
@@ -58,6 +67,5 @@
                 </div>
             </div>
         </main>
-
     </div>
 </div>

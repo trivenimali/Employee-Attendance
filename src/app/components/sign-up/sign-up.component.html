@@ -14,8 +14,8 @@
             <div class="text-danger" *ngIf="frmSignup.controls['name'].hasError('required')">
               Name is Required!
             </div>
-
           </div>
+
           <div class="form-group">
             <label for="email" [ngClass]="frmSignup.controls['email'].invalid ? 'text-danger' : ''">Email
               Address</label>
@@ -36,8 +36,8 @@
             <div class="text-danger" *ngIf="frmSignup.controls['phone'].hasError('required')">
               Phone no is Required!
             </div>
-
           </div>
+
           <div class="form-group">
             <label for="password"
               [ngClass]="frmSignup.controls['password'].invalid ? 'text-danger' : ''">Password:</label>
@@ -52,8 +52,8 @@
                 frmSignup.controls['password'].hasError('minlength') ? '' :
                 '' }}</i> Password must be a 8 character long and containig atleast one number.
             </label>
-
           </div>
+
           <div class="form-group">
             <label for="confirmPassword"
               [ngClass]="frmSignup.controls['confirmPassword'].invalid ? 'text-danger' : ''">Confirm
@@ -71,8 +71,7 @@
 
           <div class="form-group">
             <button [disabled]="frmSignup.invalid" type="submit" class="btn btn-primary btn-block font-weight-bold"
-              (click)="register()">Sign
-              up</button>
+              (click)="register()">Sign up</button>
           </div>
 
           <p class="link">Already have an account?<a routerLink="/sign-in">Sign In</a></p>
