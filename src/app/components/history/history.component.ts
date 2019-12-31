@@ -44,7 +44,6 @@ export class HistoryComponent implements OnInit {
     this.user$ = this.authService.user$;
     this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg'); //for background image
     
-
     //for getting user id
     this.afauth.authState.subscribe(user => {
       if (user) {

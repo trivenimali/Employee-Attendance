@@ -21,10 +21,10 @@
                     </li>
 
                     <li class="nav-item">
-                            <a class="nav-link " routerLink="/history">
-                                <i class="fas fa-history"></i>User History
-                            </a>
-                        </li>
+                        <a class="nav-link " routerLink="/history">
+                            <i class="fas fa-history"></i>User History
+                        </a>
+                    </li>
 
                     <!-- Calling SignOut() Api from AuthService -->
                     <li class="nav-item">
@@ -52,18 +52,15 @@
                             <p>Punch In Time: <strong>{{punchIn_Time | date:'mediumTime'}}</strong></p>
                             <p>Punch Out Time: <strong>{{punchOut_Time | date:'mediumTime'}}</strong></p>
                         </div>
-
-                        <hr>
-
-                        <div class="media-body">
-                            <button type="button" [disabled]="punchIn_Time" class="btn btn-labeled btn-danger"
-                                (click)="punchInTime()">
-                                <span class="btn-label"></span>Punch In</button> &nbsp;
-                            <button type="button" [disabled]="punchOut_Time" class="btn btn-labeled btn-danger"
-                                (click)="punchOutTime()">
-                                <span class="btn-label"></span>Punch Out</button>
-                        </div>
                     </div>
+                </div>
+                <div class="media-body">
+                    <button type="button" *ngIf="!punchIn_Time" class="btn btn-labeled btn-danger"
+                        (click)="punchInTime()">
+                        <span class="btn-label"></span>Punch In</button> &nbsp;
+                    <button type="button" *ngIf="!punchOut_Time" class="btn btn-labeled btn-danger"
+                        (click)="punchOutTime()">
+                        <span class="btn-label"></span>Punch Out</button>
                 </div>
             </div>
         </main>

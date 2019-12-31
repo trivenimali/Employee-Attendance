@@ -69,8 +69,7 @@ export class DashboardComponent implements OnInit {
           this.punchOut_Time = res.payload.data().punchOutTime;
       })
     })
-
-  }
+}
 
   public ngOnDestroy() {
     this.elementRef.nativeElement.ownerDocument.body.classList.remove('loginBg');   //for background image
