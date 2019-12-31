@@ -24,8 +24,8 @@ export class DashboardComponent implements OnInit {
 
   attendCol: AngularFirestoreCollection<Attendance>;    //for retrieving data of collection
   attend: Observable<Attendance[]>;                     //for retrieving data of collection 
-  punchIn: Date;                                        //used in functionality of punchIn
-  punchOut: Date;                                       //used in functionality of punchOut
+  punchIn_Time: Date;                                   //used in functionality of punchIn
+  punchOut_Time: Date;                                  //used in functionality of punchOut
   date;                                                 //used for accessing date
   userId: any;                                          //for id of user
   user$: Observable<any>;                               //used for accessing authService in this
@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
   todayNumber: number = Date.now();
   attend1: any;
   time_diff;
-  
+
 
   constructor(public afs: AngularFirestore,             //injecting firestore service
     public afauth: AngularFireAuth,                     //injecting firebase auth service
@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
 
     this.user$ = this.authService.user$;
-
+    this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg');
 
     //this will gives a user id
     this.afauth.authState.subscribe(user => {
@@ -66,16 +66,17 @@ export class DashboardComponent implements OnInit {
         .subscribe(res => {
           console.log(res)
 
-          this.punchIn = res['punchInTime'];
-          this.punchOut = res['punchOutTime'];
-  
+          this.punchIn_Time = res['punchInTime'];
+          this.punchOut_Time = res['punchOutTime'];
+
         })
-     })
+    })
 
   }
 
   public ngOnDestroy() {
     this.elementRef.nativeElement.ownerDocument.body.classList.remove('loginBg');   //for background image
+    this.elementRef.nativeElement.ownerDocument.body.classList.remove('navbar');
   }
 
   //for getting punchIn time
@@ -84,7 +85,7 @@ export class DashboardComponent implements OnInit {
     this.date = Date.now();
     let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy');//it will gives current date
 
-    this.punchIn = new Date(this.date);   //used for getting current time
+    this.punchIn_Time = new Date(this.date);   //used for getting current time
 
     //below code is used to set employees punch in time which stores in firestore collection
     this.afs.collection('users')
@@ -98,18 +99,15 @@ export class DashboardComponent implements OnInit {
         console.log("Success")
       })
 
-    //localStorage.setItem('isVisible', JSON.stringify(this.isVisible))
   }
 
   //for getting punchOut time
   punchOutTime() {
 
-    //this.isVisible = !this.isVisible;
-
     this.date = Date.now();
     let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy'); //it will shows current date
 
-    this.punchOut = new Date(this.date);      //used for getting current time
+    this.punchOut_Time = new Date(this.date);      //used for getting current time
 
     //below code is used to set employees punch out time which stores in firestore collection 
     this.afs.collection('users')
@@ -124,8 +122,8 @@ export class DashboardComponent implements OnInit {
       })
 
     //calculating difference of punchOut and punchIn time
-    var punchIn_time = moment(this.punchIn);
-    var punchOut_time = moment(this.punchOut);
+    var punchIn_time = moment(this.punchIn_Time);
+    var punchOut_time = moment(this.punchOut_Time);
 
     //used moment function for calculating difference between punchIn time and punchOut time
     this.time_diff = punchOut_time.diff(punchIn_time, 'hours');

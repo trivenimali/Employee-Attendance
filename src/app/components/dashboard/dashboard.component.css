@@ -43,6 +43,15 @@ button::after {
     color: black;
   }
 
+  .h4, .media-body, .nav-link, .dasboard-text{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+  
+.d-md-block, .bg-light, .sidebar{
+    background-color: rgb(173, 211, 236);
+  }
+  
+
   
  
   

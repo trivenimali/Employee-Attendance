@@ -33,11 +33,11 @@
             <div class="inner-adjust">
 
                 <div class="pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">User History</h1>
+                    <h1 class="h4">User History</h1>
                 </div>
 
                 <!--show user data when logged in -->
-                <div class="row" *ngIf="(user$ | async) as user">
+                 <div class="row" *ngIf="(user$ | async) as user">
                     <div class="col-md-12">
                         <div class="media">
                             <div class="media-body">
@@ -45,26 +45,30 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> 
 
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Punch In Time</th>
-                            <th scope="col">Punch Out Time</th>
-                            <th scope="col">Total Hours</th>
-                        </tr>
-                    </thead>
-                    <tbody *ngFor="let attendance of attend1 | async">
-                        <tr>
-                            <td>{{attendance.id}}</td>
-                            <td>{{attendance.data.punchInTime | date:'mediumTime'}}</td>
-                            <td>{{attendance.data.punchOutTime | date:'mediumTime'}}</td>
-                            <td>{{attendance.data.total_hours}} hours</td>
-                        </tr>
-                    </tbody>
-                </table>
+                
+                <div class="card" style="width: 40rem; border-color: rgb(137, 164, 253);">
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Punch In Time</th>
+                                <th scope="col">Punch Out Time</th>
+                                <th scope="col">Total Hours</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let attendance of attend1 | async">
+                            <tr>
+                                <td>{{attendance.id}}</td>
+                                <td>{{attendance.data.punchInTime | date:'mediumTime'}}</td>
+                                <td>{{attendance.data.punchOutTime | date:'mediumTime'}}</td>
+                                <td>{{attendance.data.total_hours}} hours</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
     </div>

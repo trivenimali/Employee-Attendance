@@ -33,36 +33,31 @@
         <!-- Main content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <div class="inner-adjust">
-
-                <div class="pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">User Profile</h1>
+                <div class="pt-3 pb-2 mb-3 ">
+                    <h1 class="h4">User Profile</h1>
                 </div>
-
-                <!-- Show user data when logged in -->
-                <div class="row" *ngIf="(user$ | async) as user">
-                    <div class="col-md-12">
-                        <div class="media">
-                            <div class="media-body">
-                                <p>User Name: <strong>{{user.name}}</strong></p>
-                                <p>Date : <strong>{{todayNumber | date}}</strong></p>
-                                <p>Punch In Time: <strong>{{punchIn | date:'mediumTime'}}</strong></p>
-                                <p>Punch Out Time: <strong>{{punchOut | date:'mediumTime'}}</strong></p>
-                            </div>
+                <div class="card" style="width: 40rem; border-color: rgb(137, 164, 253);"
+                    *ngIf="(user$ | async) as user">
+                    <div class="card-body">
+                        <div class="media-body">
+                            <p>User Name: <strong>{{user.name}}</strong></p>
+                            <p>Date : <strong>{{todayNumber | date}}</strong></p>
+                            <p>Punch In Time: <strong>{{punchIn_Time | date:'mediumTime'}}</strong></p>
+                            <p>Punch Out Time: <strong>{{punchOut_Time | date:'mediumTime'}}</strong></p>
                         </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <button type="submit" [disabled]="punchIn" class="btn btn-labeled btn-danger"
-                            (click)="punchInTime()">
-                            <span class="btn-label"></span>Punch In</button> &nbsp;
-                        <button type="submit" [disabled]="punchOut" class="btn btn-labeled btn-danger"
-                            (click)="punchOutTime()">
-                            <span class="btn-label"></span>Punch Out</button>
+                        <hr>
+                        <div class="media-body">
+                            <button type="button" [disabled]="punchIn_Time" class="btn btn-labeled btn-danger"
+                                (click)="punchInTime()">
+                                <span class="btn-label"></span>Punch In</button> &nbsp;
+                            <button type="button" [disabled]="punchOut_Time" class="btn btn-labeled btn-danger"
+                                (click)="punchOutTime()">
+                                <span class="btn-label"></span>Punch Out</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
+
     </div>
 </div>

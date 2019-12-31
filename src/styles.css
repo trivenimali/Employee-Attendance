@@ -243,7 +243,7 @@ input:-moz-placeholder {
 @supports ((position:-webkit-sticky) or (position:sticky)) {
   .sidebar-sticky {
     position: -webkit-sticky;
-    position: sticky;
+    position:sticky;
   }
 }
 
@@ -533,6 +533,7 @@ body .table thead th {
 }
 
 .loginBg {
+
   background: url(assets/img/bg.jpg) no-repeat center center;
 }
 
