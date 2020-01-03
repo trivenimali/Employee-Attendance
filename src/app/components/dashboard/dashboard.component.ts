@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit {
   todayNumber: number = Date.now();
   attend1: any;
   time_diff;
+  
 
 
   constructor(public afs: AngularFirestore,             //injecting firestore service
@@ -70,7 +71,7 @@ export class DashboardComponent implements OnInit {
       })
     })
 }
-
+  
   public ngOnDestroy() {
     this.elementRef.nativeElement.ownerDocument.body.classList.remove('loginBg');   //for background image
     this.elementRef.nativeElement.ownerDocument.body.classList.remove('navbar');
