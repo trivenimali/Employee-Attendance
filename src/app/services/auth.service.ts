@@ -7,6 +7,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of, } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { resolve } from 'dns';
+import { reject } from 'q';
 
 
 @Injectable({
@@ -77,5 +79,17 @@ export class AuthService {
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
     return (user !== null) ? true: false;
+  }
+
+  getLocation():Promise<any>{
+
+      return new Promise((resolve, reject)=>{
+        navigator.geolocation.getCurrentPosition(resp =>{
+          resolve({lng:resp.coords.longitude, lat: resp.coords.latitude});
+        },
+        err=>{
+          reject(err);
+        });
+      });
   } 
 }

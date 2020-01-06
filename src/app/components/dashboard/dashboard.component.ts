@@ -7,6 +7,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { DatePipe } from '@angular/common';
 import { Moment } from 'moment';
 const moment = require('moment');
+import { toLatLng, toLatLon, toLatitudeLongitude, headingDistanceTo,moveTo, insidePolygon, insideCircle } from 'geolocation-utils';
 
 //interface is used for getting data of collection
 export interface Attendance {
@@ -33,6 +34,7 @@ export class DashboardComponent implements OnInit {
   todayNumber: number = Date.now();
   attend1: any;
   time_diff;
+  //position:any
   
 
 
@@ -54,6 +56,8 @@ export class DashboardComponent implements OnInit {
         console.log(this.userId);
       }
 
+      
+
       this.date = Date.now();
       let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy')
       console.log(latest_date);
@@ -70,6 +74,21 @@ export class DashboardComponent implements OnInit {
           this.punchOut_Time = res.payload.data().punchOutTime;
       })
     })
+
+    this.authService.getLocation().then(pos=>{
+
+      console.log(`Position: ${pos.lng} ${pos.lat}`)
+      //console.log(headingDistanceTo())
+
+      /* const location={lat:pos.lat, lon:pos.lon}
+
+      console.log(headingDistanceTo(location, location)); */
+
+      const center= {lat:pos.lat,lon:pos.lon}
+      const radius=10000;
+
+      console.log(insideCircle({lat:51, lon:4}, center, radius))
+    });
 }
   
   public ngOnDestroy() {
@@ -124,8 +143,8 @@ export class DashboardComponent implements OnInit {
     var punchOut_time = moment(this.punchOut_Time);
 
     //used moment function for calculating difference between punchIn time and punchOut time
-    this.time_diff = punchOut_time.diff(punchIn_time, 'hours');
-
+     this.time_diff = punchOut_time.diff(punchIn_time, 'hours');
+    
     console.log(this.time_diff);
 
     //storing total hours in firestore collection
@@ -140,6 +159,7 @@ export class DashboardComponent implements OnInit {
         console.log("success")
       })
   }
+
 }
 
 
