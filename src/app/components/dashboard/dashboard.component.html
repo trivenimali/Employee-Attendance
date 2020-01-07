@@ -58,8 +58,8 @@
                     <button type="button" [disabled]="punchIn_Time" class="btn btn-labeled btn-danger"
                         (click)="punchInTime()">
                         <span class="btn-label"></span>Punch In</button> &nbsp;
-                    <button type="button" *ngIf="punchIn_Time" [disabled]="punchOut_Time" class="btn btn-labeled btn-danger"
-                        (click)="punchOutTime()">
+                    <button type="button" *ngIf="punchIn_Time" [disabled]="punchOut_Time"
+                        class="btn btn-labeled btn-danger" (click)="punchOutTime()">
                         <span class="btn-label"></span>Punch Out</button>
                 </div>
             </div>

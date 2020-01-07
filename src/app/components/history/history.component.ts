@@ -30,7 +30,8 @@ export class HistoryComponent implements OnInit {
   attend: Observable<Attendance[]>;                                 //for retrieving data of collection
   user$: Observable<any>;                                           //used for accessing authService in this
   userId: any;
-  attend1: any;                                                     //for id of user
+  attend1: any;
+  date;                                               //for id of user
 
   constructor(public authService: AuthService,                      //authentication Service
     public elementRef: ElementRef,
@@ -43,16 +44,20 @@ export class HistoryComponent implements OnInit {
 
     this.user$ = this.authService.user$;
     this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg'); //for background image
-    
+
     //for getting user id
     this.afauth.authState.subscribe(user => {
       if (user) {
         this.userId = user.uid
         console.log(this.userId);
 
+        this.date = Date.now();
+        let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy')
+
         //used for retrieving data from collection
         this.attendCol = this.afs.collection('users').doc(this.userId).collection('attendance');
-        
+
+
         //this.attend = this.attendCol.valueChanges();         //valueChange gives all collection data except id of document 
 
         //snapshotChange gives metadata

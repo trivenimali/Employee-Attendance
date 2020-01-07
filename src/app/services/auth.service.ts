@@ -7,8 +7,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of, } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { resolve } from 'dns';
-import { reject } from 'q';
+const geolib = require('geolib');
+
 
 
 @Injectable({
@@ -16,13 +16,15 @@ import { reject } from 'q';
 })
 export class AuthService {
   userData: any;                                            //save loggedIn user data
-  user$: Observable<User>;                                  //for accessing field of interface 
+  user$: Observable<User>;
+  //for accessing field of interface 
 
 
   constructor(public firestore: AngularFirestore,           //injecting firestore service
     public afauth: AngularFireAuth,               //injecting firebase auth service
     public router: Router,
     public toast: ToastrService) {
+
 
     //saving user data in localstorage when logged in and setting up null when logged out 
     this.afauth.authState.subscribe(user => {
@@ -47,6 +49,8 @@ export class AuthService {
         }
       })
     );
+
+
   }
 
   // Sign in with email/password
@@ -78,18 +82,23 @@ export class AuthService {
   //return true when user is logged in
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
-    return (user !== null) ? true: false;
+    return (user !== null) ? true : false;
   }
 
-  getLocation():Promise<any>{
+  //method for getting latitude and longitude
+  getLocation(): Promise<any> {
 
-      return new Promise((resolve, reject)=>{
-        navigator.geolocation.getCurrentPosition(resp =>{
-          resolve({lng:resp.coords.longitude, lat: resp.coords.latitude});
-        },
-        err=>{
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resp => {
+        resolve({ lng: resp.coords.longitude, lat: resp.coords.latitude });
+      },
+        err => {
           reject(err);
         });
-      });
-  } 
+    });
+  }
+
+
+
+
 }
