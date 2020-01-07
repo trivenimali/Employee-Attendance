@@ -51,8 +51,6 @@ export class HistoryComponent implements OnInit {
         this.userId = user.uid
         console.log(this.userId);
 
-        this.date = Date.now();
-        let latest_date = this.datePipe.transform(this.date, 'dd-MM-yyyy')
 
         //used for retrieving data from collection
         this.attendCol = this.afs.collection('users').doc(this.userId).collection('attendance');

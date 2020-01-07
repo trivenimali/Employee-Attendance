@@ -1,18 +1,14 @@
-import { Component, OnInit, ElementRef, PipeTransform, Pipe } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable, of, merge } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { DatePipe } from '@angular/common';
-import { Moment } from 'moment';
 const moment = require('moment');
+import { getDistance } from 'geolib';
+import { distanceTo } from 'geolocation-utils';
 const geolib = require('geolib');
-import { getPreciseDistance } from 'geolib';
-
-
-
-import { toLatLng, toLatLon, toLatitudeLongitude, headingDistanceTo, moveTo, insidePolygon, insideCircle, distanceTo } from 'geolocation-utils';
 
 //interface is used for getting data of collection
 export interface Attendance {
@@ -41,8 +37,6 @@ export class DashboardComponent implements OnInit {
   time_diff;
   distance: any;
   user_lat; user_lon;
-
-
 
   constructor(public afs: AngularFirestore,             //injecting firestore service
     public afauth: AngularFireAuth,                     //injecting firebase auth service
@@ -90,9 +84,36 @@ export class DashboardComponent implements OnInit {
         { lat: pos.lat, lon: pos.lng }
       )
       console.log(this.distance)
+      console.log(geolib.convertDistance(this.distance,'km'))
 
       this.user_lat = pos.lat
       this.user_lon = pos.lng
+
+      this.distance = getDistance(
+        { lat: 18.5446292, lon: 73.9067578 },
+        { lat: 18.4967, lon: 73.9417 }
+      );
+
+      console.log(this.distance)
+
+      console.log(geolib.convertDistance(this.distance, 'km'));
+
+      navigator.geolocation.getCurrentPosition(
+        function () {
+          console.log(
+            'You are',
+            geolib.getDistance(
+              { lat: 18.5446292, lon: 73.9067578 },
+              { lat: 18.4967, lon: 73.9417 },
+              { lat: 18.5446292, lon: 73.9067578 }
+            ),
+            'meters away from webcubator Technology '
+          );
+        },
+        () => {
+          alert('Position could not be determined')
+        }
+      )
 
     });
 
@@ -107,7 +128,6 @@ export class DashboardComponent implements OnInit {
 
   public ngOnDestroy() {
     this.elementRef.nativeElement.ownerDocument.body.classList.remove('loginBg');   //for background image
-    this.elementRef.nativeElement.ownerDocument.body.classList.remove('navbar');
   }
 
   //for getting punchIn time
@@ -182,4 +202,6 @@ export class DashboardComponent implements OnInit {
       var dy = Math.abs(centerPoint.lat - checkPoint.lat) * ky;
       return Math.sqrt(dx * dx + dy * dy) <= km;
     } */
+
+
 }
