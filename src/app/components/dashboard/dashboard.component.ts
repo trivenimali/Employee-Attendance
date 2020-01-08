@@ -35,12 +35,14 @@ export class DashboardComponent implements OnInit {
   todayNumber: number = Date.now();
   attend1: any;
   time_diff;
-  distance: any;
-  user_lat; user_lon;
+  distance: any;                                        //used for calculate distance between two location
+  user_lat;                                             // latitude of user location
+  user_lon;                                             //longitude of user location
 
   constructor(public afs: AngularFirestore,             //injecting firestore service
     public afauth: AngularFireAuth,                     //injecting firebase auth service
-    public router: Router, public authService: AuthService,
+    public router: Router,                              //for routing purpose
+    public authService: AuthService,                    //calling authservice for use
     private elementRef: ElementRef,
     private datePipe: DatePipe) { }
 
@@ -95,7 +97,6 @@ export class DashboardComponent implements OnInit {
       );
 
       console.log(this.distance)
-
       console.log(geolib.convertDistance(this.distance, 'km'));
 
       navigator.geolocation.getCurrentPosition(
@@ -114,16 +115,7 @@ export class DashboardComponent implements OnInit {
           alert('Position could not be determined')
         }
       )
-
-    });
-
-    //for checking locations points are near or not
-    //var web = { lat: 18.5446292, lon: 73.9067578 }
-    //var user_loc = { lat: 18.4967, lon:  73.9417 }
-
-    // var n = this.find_dist(web, user_loc, 100)
-
-    //console.log(n);
+    }); 
   }
 
   public ngOnDestroy() {
@@ -191,7 +183,9 @@ export class DashboardComponent implements OnInit {
         console.log("success")
       })
   }
-  /* 
+}
+
+/* 
   for checking two location points are near or not
 
     find_dist(checkPoint, centerPoint, km) {
@@ -201,7 +195,14 @@ export class DashboardComponent implements OnInit {
       var dx = Math.abs(centerPoint.lng - checkPoint.lng) * kx;
       var dy = Math.abs(centerPoint.lat - checkPoint.lat) * ky;
       return Math.sqrt(dx * dx + dy * dy) <= km;
-    } */
+    } 
+    
+     //for checking locations points are near or not
+    //var web = { lat: 18.5446292, lon: 73.9067578 }
+    //var user_loc = { lat: 18.4967, lon:  73.9417 }
 
+    // var n = this.find_dist(web, user_loc, 100)
 
-}
+    //console.log(n);
+    
+    */
