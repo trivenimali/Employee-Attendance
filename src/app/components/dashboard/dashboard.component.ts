@@ -7,8 +7,12 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { DatePipe } from '@angular/common';
 const moment = require('moment');
 import { getDistance } from 'geolib';
-import { distanceTo } from 'geolocation-utils';
+import { distanceTo, insideCircle } from 'geolocation-utils';
 const geolib = require('geolib');
+import { 
+  toLatLon, toLatitudeLongitude, headingDistanceTo, moveTo, insidePolygon 
+} from 'geolocation-utils';
+import { ToastrService } from 'ngx-toastr';
 
 //interface is used for getting data of collection
 export interface Attendance {
@@ -37,19 +41,22 @@ export class DashboardComponent implements OnInit {
   time_diff;
   distance: any;                                        //used for calculate distance between two location
   user_lat;                                             // latitude of user location
-  user_lon;                                             //longitude of user location
+  user_lon;     
+  check_status:boolean;                                        //longitude of user location
 
   constructor(public afs: AngularFirestore,             //injecting firestore service
     public afauth: AngularFireAuth,                     //injecting firebase auth service
     public router: Router,                              //for routing purpose
     public authService: AuthService,                    //calling authservice for use
     private elementRef: ElementRef,
-    private datePipe: DatePipe) { }
+    private datePipe: DatePipe,
+    public toastr:ToastrService) { }
 
   ngOnInit() {
 
     this.user$ = this.authService.user$;
     this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg');
+    const radius=1000;                                  //radius in meters
 
     //this will gives a user id
     this.afauth.authState.subscribe(user => {
@@ -116,6 +123,17 @@ export class DashboardComponent implements OnInit {
         }
       )
     }); 
+
+    
+
+    //below geolocation-util function is used for checking user is inside particular radius;
+    this.check_status=insideCircle({lat: 18.4967, lon: 73.9417},{ lat: 18.5446292, lon: 73.9067578 }, radius);
+    console.log(this.check_status);
+
+    if(this.check_status === false){
+      this.toastr.info('You are not allow Punch-In');
+      
+    }
   }
 
   public ngOnDestroy() {
@@ -184,25 +202,3 @@ export class DashboardComponent implements OnInit {
       })
   }
 }
-
-/* 
-  for checking two location points are near or not
-
-    find_dist(checkPoint, centerPoint, km) {
-  
-      var ky = 40000 / 360;
-      var kx = Math.cos(Math.PI * centerPoint.lat / 180.0) * ky;
-      var dx = Math.abs(centerPoint.lng - checkPoint.lng) * kx;
-      var dy = Math.abs(centerPoint.lat - checkPoint.lat) * ky;
-      return Math.sqrt(dx * dx + dy * dy) <= km;
-    } 
-    
-     //for checking locations points are near or not
-    //var web = { lat: 18.5446292, lon: 73.9067578 }
-    //var user_loc = { lat: 18.4967, lon:  73.9417 }
-
-    // var n = this.find_dist(web, user_loc, 100)
-
-    //console.log(n);
-    
-    */

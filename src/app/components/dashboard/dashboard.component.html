@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="media-body">
-                    <button type="button" [disabled]="punchIn_Time" class="btn btn-labeled btn-danger"
+                    <button type="button" *ngIf="check_status" [disabled]="punchIn_Time" class="btn btn-labeled btn-danger"
                         (click)="punchInTime()">
                         <span class="btn-label"></span>Punch In</button> &nbsp;
                     <button type="button" *ngIf="punchIn_Time" [disabled]="punchOut_Time"
