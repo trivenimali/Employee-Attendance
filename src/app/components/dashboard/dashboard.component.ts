@@ -98,6 +98,13 @@ export class DashboardComponent implements OnInit {
       this.user_lat = pos.lat
       this.user_lon = pos.lng
 
+      this.check_status=insideCircle({lat: this.user_lat, lon: this.user_lon},{ lat: 18.5446292, lon: 73.9067578 }, radius);
+      console.log(this.check_status);
+      if(this.check_status === false){
+        this.toastr.info('You are not allow Punch-In');
+        
+      }
+
       this.distance = getDistance(
         { lat: 18.5446292, lon: 73.9067578 },
         { lat: 18.4967, lon: 73.9417 }
@@ -124,16 +131,6 @@ export class DashboardComponent implements OnInit {
       )
     }); 
 
-    
-
-    //below geolocation-util function is used for checking user is inside particular radius;
-    this.check_status=insideCircle({lat: 18.4967, lon: 73.9417},{ lat: 18.5446292, lon: 73.9067578 }, radius);
-    console.log(this.check_status);
-
-    if(this.check_status === false){
-      this.toastr.info('You are not allow Punch-In');
-      
-    }
   }
 
   public ngOnDestroy() {
