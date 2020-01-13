@@ -9,8 +9,8 @@ const moment = require('moment');
 import { getDistance } from 'geolib';
 import { distanceTo, insideCircle } from 'geolocation-utils';
 const geolib = require('geolib');
-import { 
-  toLatLon, toLatitudeLongitude, headingDistanceTo, moveTo, insidePolygon 
+import {
+  toLatLon, toLatitudeLongitude, headingDistanceTo, moveTo, insidePolygon
 } from 'geolocation-utils';
 import { ToastrService } from 'ngx-toastr';
 
@@ -41,8 +41,8 @@ export class DashboardComponent implements OnInit {
   time_diff;
   distance: any;                                        //used for calculate distance between two location
   user_lat;                                             // latitude of user location
-  user_lon;     
-  check_status:boolean;                                        //longitude of user location
+  user_lon;
+  check_status: boolean;                                        //longitude of user location
 
   constructor(public afs: AngularFirestore,             //injecting firestore service
     public afauth: AngularFireAuth,                     //injecting firebase auth service
@@ -50,13 +50,13 @@ export class DashboardComponent implements OnInit {
     public authService: AuthService,                    //calling authservice for use
     private elementRef: ElementRef,
     private datePipe: DatePipe,
-    public toastr:ToastrService) { }
+    public toastr: ToastrService) { }
 
   ngOnInit() {
 
     this.user$ = this.authService.user$;
     this.elementRef.nativeElement.ownerDocument.body.classList.add('loginBg');
-    const radius=1000;                                  //radius in meters
+    const radius = 1000;                                  //radius in meters
 
     //this will gives a user id
     this.afauth.authState.subscribe(user => {
@@ -93,16 +93,17 @@ export class DashboardComponent implements OnInit {
         { lat: pos.lat, lon: pos.lng }
       )
       console.log(this.distance)
-      console.log(geolib.convertDistance(this.distance,'km'))
+      console.log(geolib.convertDistance(this.distance, 'km'))
 
       this.user_lat = pos.lat
       this.user_lon = pos.lng
 
-      this.check_status=insideCircle({lat: this.user_lat, lon: this.user_lon},{ lat: 18.5446292, lon: 73.9067578 }, radius);
+      //below method shows user status if user is in desired radius or not 
+      this.check_status = insideCircle({ lat: this.user_lat, lon: this.user_lon }, { lat: 18.5446292, lon: 73.9067578 }, radius);
       console.log(this.check_status);
-      if(this.check_status === false){
+      if (this.check_status === false) {
         this.toastr.info('You are not allow Punch-In');
-        
+
       }
 
       this.distance = getDistance(
@@ -129,7 +130,7 @@ export class DashboardComponent implements OnInit {
           alert('Position could not be determined')
         }
       )
-    }); 
+    });
 
   }
 
@@ -154,7 +155,7 @@ export class DashboardComponent implements OnInit {
         punchInTime: this.date
       })
       .then(function () {
-        console.log("Success")
+        console.log("success")
       })
   }
   //for getting punchOut time
@@ -181,7 +182,7 @@ export class DashboardComponent implements OnInit {
     var punchIn_time = moment(this.punchIn_Time);
     var punchOut_time = moment(this.punchOut_Time);
 
-    //used moment function for calculating difference between punchIn time and punchOut time
+    //used moment.js function for calculating difference between punchIn time and punchOut time
     this.time_diff = punchOut_time.diff(punchIn_time, 'hours');
 
     console.log(this.time_diff);
@@ -199,3 +200,5 @@ export class DashboardComponent implements OnInit {
       })
   }
 }
+
+//used firestore function: set, merge, update

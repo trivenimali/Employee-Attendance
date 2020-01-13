@@ -56,7 +56,7 @@ export class HistoryComponent implements OnInit {
         this.attendCol = this.afs.collection('users').doc(this.userId).collection('attendance');
 
 
-        //this.attend = this.attendCol.valueChanges();         //valueChange gives all collection data except id of document 
+        //this.attend = this.attendCol.valueChanges();         //valueChanges gives all collection data except id of document 
 
         //snapshotChange gives metadata
         this.attend1 = this.attendCol.snapshotChanges().pipe(map(actions => {

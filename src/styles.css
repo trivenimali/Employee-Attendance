@@ -7,7 +7,11 @@
   box-sizing: border-box;
 }
 
-html,
+/* // Example */
+/* // Apply styles starting from medium devices and up to extra large devices */
+@media (min-width: 768px) and (max-width: 1199.98px) { 
+
+  html,
 body {
   margin: 0;
   padding: 0;
@@ -536,6 +540,10 @@ body .table thead th {
 
   background: url(assets/img/bg.jpg) no-repeat center center;
 }
+
+ }
+
+
 
 
 /* Responsive */
