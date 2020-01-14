@@ -134,8 +134,8 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  public ngOnDestroy() {
-    this.elementRef.nativeElement.ownerDocument.body.classList.remove('loginBg');   //for background image
+  public ngOnDestroy(){
+    this.elementRef.nativeElement.ownerDocument.body.classList.remove('loginBg');
   }
 
   //for getting punchIn time
@@ -180,7 +180,7 @@ export class DashboardComponent implements OnInit {
 
     //calculating difference of punchOut and punchIn time
     var punchIn_time = moment(this.punchIn_Time);
-    var punchOut_time = moment(this.punchOut_Time);
+    var punchOut_time= moment(this.punchOut_Time);
 
     //used moment.js function for calculating difference between punchIn time and punchOut time
     this.time_diff = punchOut_time.diff(punchIn_time, 'hours');
@@ -200,5 +200,6 @@ export class DashboardComponent implements OnInit {
       })
   }
 }
+
 
 //used firestore function: set, merge, update

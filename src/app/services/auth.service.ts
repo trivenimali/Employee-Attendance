@@ -49,9 +49,7 @@ export class AuthService {
         }
       })
     );
-
-
-  }
+}
 
   // Sign in with email/password
   login(value) {
@@ -97,4 +95,5 @@ export class AuthService {
         });
     });
   }
+
 }

@@ -31,7 +31,7 @@ export class HistoryComponent implements OnInit {
   user$: Observable<any>;                                           //used for accessing authService in this
   userId: any;
   attend1: any;
-  date;                                               //for id of user
+  date;                                                             //for id of user
 
   constructor(public authService: AuthService,                      //authentication Service
     public elementRef: ElementRef,
@@ -59,12 +59,13 @@ export class HistoryComponent implements OnInit {
         //this.attend = this.attendCol.valueChanges();         //valueChanges gives all collection data except id of document 
 
         //snapshotChange gives metadata
-        this.attend1 = this.attendCol.snapshotChanges().pipe(map(actions => {
-          return actions.map(a => {
+        
+        this.attend1=this.attendCol.snapshotChanges().pipe(map(actions =>{
+          return actions.map(a =>{
             const data = a.payload.doc.data() as Attendance
             const id = a.payload.doc.id;
             console.log(data);
-            return { id, data };
+            return {id, data};
           })
         }))
       }

@@ -55,8 +55,9 @@ export class SignInComponent implements OnInit {
     );
   }
 
-  submit() {
-    // do signin 
+
+  submit(){
+    // do signin
     console.log(this.frmSignin.value);
   }
 
